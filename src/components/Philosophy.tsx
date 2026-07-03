@@ -31,20 +31,20 @@ export default function Philosophy() {
   ];
 
   return (
-    <section id="philosophy" className="py-24 bg-riksa-brown-dark relative overflow-hidden">
+    <section id="philosophy" className="py-16 md:py-24 bg-riksa-brown-dark relative overflow-hidden">
       <div className="absolute inset-0 pattern-sunda-dark"></div>
       
-      <div className="container mx-auto px-6 relative z-10">
-        <FadeIn className="text-center mb-16">
-          <h2 className="font-serif text-4xl text-riksa-cream font-bold mb-4">Filosofi Logo</h2>
+      <div className="container mx-auto px-4 sm:px-6 relative z-10">
+        <FadeIn className="text-center mb-10 md:mb-16">
+          <h2 className="font-serif text-3xl sm:text-4xl text-riksa-cream font-bold mb-4">Filosofi Logo</h2>
           <div className="w-16 h-1 bg-riksa-gold mx-auto rounded"></div>
         </FadeIn>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
           {philosophies.map((item, index) => (
             <FadeIn key={item.id} delay={index * 0.1} direction="up">
               <motion.div 
-                className="group h-full bg-riksa-cream/5 border border-riksa-gold/20 p-8 rounded-2xl hover:bg-riksa-cream/10 transition-colors duration-300"
+                className="group h-full bg-riksa-cream/5 border border-riksa-gold/20 p-6 sm:p-8 rounded-2xl hover:bg-riksa-cream/10 transition-colors duration-300"
                 whileHover={{ y: -5 }}
               >
                 <div className="text-riksa-white group-hover:text-riksa-orange-light mb-6 transition-colors duration-300 flex justify-center">

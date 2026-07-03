@@ -7,9 +7,9 @@ type LogoFrameProps = {
 };
 
 const variantClass = {
-  nav: 'h-14 w-[150px] rounded-2xl border p-1.5 shadow-[0_12px_32px_rgba(61,32,19,0.14)]',
-  hero: 'h-32 w-[330px] rounded-[2rem] border-[3px] p-3 shadow-2xl md:h-40 md:w-[430px]',
-  footer: 'h-20 w-[210px] rounded-[1.35rem] border-2 p-2 shadow-xl',
+  nav: 'h-12 w-[132px] rounded-2xl border p-1.5 shadow-[0_12px_32px_rgba(61,32,19,0.14)] sm:h-14 sm:w-[150px]',
+  hero: 'h-24 w-[260px] rounded-[1.5rem] border-[3px] p-2.5 shadow-2xl sm:h-32 sm:w-[330px] md:h-40 md:w-[430px]',
+  footer: 'h-16 w-[176px] rounded-[1.15rem] border-2 p-1.5 shadow-xl sm:h-20 sm:w-[210px] sm:rounded-[1.35rem] sm:p-2',
 };
 
 export default function LogoFrame({ className = '', imageClassName = '', variant = 'nav' }: LogoFrameProps) {

@@ -89,12 +89,12 @@ export default function Converter() {
     : translateSundaToLatin(input);
 
   return (
-    <section id="converter" className="py-24 bg-riksa-brown-dark relative overflow-hidden">
+    <section id="converter" className="py-16 md:py-24 bg-riksa-brown-dark relative overflow-hidden">
       <div className="absolute inset-0 pattern-sunda-dark opacity-50"></div>
       
-      <div className="container mx-auto px-6 relative z-10">
-        <FadeIn className="text-center mb-16">
-          <h2 className="font-serif text-4xl text-riksa-cream font-bold mb-4">Mesin Alih Aksara</h2>
+      <div className="container mx-auto px-4 sm:px-6 relative z-10">
+        <FadeIn className="text-center mb-10 md:mb-16">
+          <h2 className="font-serif text-3xl sm:text-4xl text-riksa-cream font-bold mb-4">Mesin Alih Aksara</h2>
           <div className="w-16 h-1 bg-riksa-gold mx-auto rounded"></div>
           <p className="mt-6 text-riksa-cream/80 max-w-2xl mx-auto font-sans">
             Konversikan teks Latin ke Aksara Sunda baku atau sebaliknya secara instan.
@@ -102,29 +102,29 @@ export default function Converter() {
         </FadeIn>
 
         <FadeIn delay={0.2} className="max-w-4xl mx-auto">
-          <div className="bg-riksa-cream rounded-3xl shadow-2xl p-6 md:p-10 border-4 border-riksa-gold/20">
+          <div className="bg-riksa-cream rounded-2xl md:rounded-3xl shadow-2xl p-4 sm:p-6 md:p-10 border-2 sm:border-4 border-riksa-gold/20">
             
             {/* Mode Switcher */}
-            <div className="flex flex-col md:flex-row items-center justify-between mb-8 gap-4">
-              <div className={`px-6 py-3 rounded-xl font-bold flex-1 text-center transition-all ${mode === 'latin-to-sunda' ? 'bg-riksa-brown-dark text-riksa-gold' : 'bg-transparent text-riksa-brown-dark border-2 border-riksa-brown-dark/20'}`}>
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between mb-6 sm:mb-8 gap-3 sm:gap-4">
+              <div className={`px-4 sm:px-6 py-3 rounded-xl font-bold flex-1 text-center transition-all ${mode === 'latin-to-sunda' ? 'bg-riksa-brown-dark text-riksa-gold' : 'bg-transparent text-riksa-brown-dark border-2 border-riksa-brown-dark/20'}`}>
                 Latin
               </div>
               
               <button 
                 onClick={toggleMode}
-                className="bg-riksa-orange text-white p-4 rounded-full hover:bg-riksa-orange-light hover:rotate-180 transition-all duration-500 shadow-lg shrink-0"
+                className="bg-riksa-orange text-white p-3.5 sm:p-4 rounded-full hover:bg-riksa-orange-light hover:rotate-180 transition-all duration-500 shadow-lg shrink-0 self-center"
                 aria-label="Tukar arah transliterasi"
               >
                 <ArrowRightLeft size={24} />
               </button>
               
-              <div className={`px-6 py-3 rounded-xl font-bold flex-1 text-center transition-all ${mode === 'sunda-to-latin' ? 'bg-riksa-brown-dark text-riksa-gold' : 'bg-transparent text-riksa-brown-dark border-2 border-riksa-brown-dark/20'}`}>
+              <div className={`px-4 sm:px-6 py-3 rounded-xl font-bold flex-1 text-center transition-all ${mode === 'sunda-to-latin' ? 'bg-riksa-brown-dark text-riksa-gold' : 'bg-transparent text-riksa-brown-dark border-2 border-riksa-brown-dark/20'}`}>
                 Aksara Sunda
               </div>
             </div>
 
             {/* Translation Area */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-6">
               <div className="flex flex-col">
                 <label className="text-riksa-brown-dark font-bold mb-2 ml-2 text-sm uppercase tracking-wider">
                   Masukan Teks ({mode === 'latin-to-sunda' ? 'Latin' : 'Aksara Sunda'})
@@ -133,15 +133,15 @@ export default function Converter() {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   placeholder={mode === 'latin-to-sunda' ? 'Ketik bahasa Sunda di dieu...' : 'Pilih huruf tina kibor di handap atawa ketik manual...'}
-                  className={`w-full h-48 p-5 bg-white border-2 border-riksa-brown-dark/10 rounded-2xl focus:outline-none focus:border-riksa-orange resize-none text-xl ${mode === 'sunda-to-latin' ? 'aksara-sunda text-3xl' : 'font-sans'}`}
+                  className={`w-full h-44 sm:h-48 p-4 sm:p-5 bg-white border-2 border-riksa-brown-dark/10 rounded-2xl focus:outline-none focus:border-riksa-orange resize-none text-base sm:text-xl ${mode === 'sunda-to-latin' ? 'aksara-sunda text-2xl sm:text-3xl' : 'font-sans'}`}
                 />
                 
                 {/* Virtual Keyboard */}
                 {mode === 'sunda-to-latin' && (
-                  <div className="mt-4 bg-white/50 border border-riksa-brown-dark/10 rounded-2xl p-4">
+                  <div className="mt-4 bg-white/50 border border-riksa-brown-dark/10 rounded-2xl p-3 sm:p-4">
                     <p className="text-xs font-bold text-riksa-orange uppercase mb-3 border-b border-riksa-orange/20 pb-2">Kibor Aksara Sunda (Keyboard)</p>
                     
-                    <div className="space-y-4 max-h-64 overflow-y-auto pr-2 custom-scrollbar">
+                    <div className="space-y-4 max-h-64 overflow-y-auto pr-1 sm:pr-2 custom-scrollbar">
                       {/* Swara */}
                       <div>
                         <p className="text-[10px] font-bold text-riksa-brown-dark/50 mb-1">SWARA</p>
@@ -150,7 +150,7 @@ export default function Converter() {
                             <button
                               key={`kb-swara-${item.latin}`}
                               onClick={() => setInput(prev => prev + item.aksara)}
-                              className="bg-white border border-riksa-brown-dark/10 hover:border-riksa-orange hover:bg-riksa-orange hover:text-white px-2 py-1 rounded-lg transition-colors min-w-[40px] flex flex-col items-center justify-center group"
+                              className="bg-white border border-riksa-brown-dark/10 hover:border-riksa-orange hover:bg-riksa-orange hover:text-white px-2 py-1 rounded-lg transition-colors min-w-9 sm:min-w-10 flex flex-col items-center justify-center group"
                               title={item.latin}
                             >
                               <span className="text-xl aksara-sunda mb-0.5">{item.aksara}</span>
@@ -168,7 +168,7 @@ export default function Converter() {
                             <button
                               key={`kb-ngalagena-${item.latin}`}
                               onClick={() => setInput(prev => prev + item.aksara)}
-                              className="bg-white border border-riksa-brown-dark/10 hover:border-riksa-orange hover:bg-riksa-orange hover:text-white px-2 py-1 rounded-lg transition-colors min-w-[40px] flex flex-col items-center justify-center group"
+                              className="bg-white border border-riksa-brown-dark/10 hover:border-riksa-orange hover:bg-riksa-orange hover:text-white px-2 py-1 rounded-lg transition-colors min-w-9 sm:min-w-10 flex flex-col items-center justify-center group"
                               title={item.latin}
                             >
                               <span className="text-xl aksara-sunda mb-0.5">{item.aksara}</span>
@@ -186,7 +186,7 @@ export default function Converter() {
                             <button
                               key={`kb-rarangken-${item.desc}`}
                               onClick={() => setInput(prev => prev + item.aksara)}
-                              className="bg-white border border-riksa-brown-dark/10 hover:border-riksa-orange hover:bg-riksa-orange hover:text-white px-2 py-1 rounded-lg transition-colors min-w-[40px] flex flex-col items-center justify-center group"
+                              className="bg-white border border-riksa-brown-dark/10 hover:border-riksa-orange hover:bg-riksa-orange hover:text-white px-2 py-1 rounded-lg transition-colors min-w-9 sm:min-w-10 flex flex-col items-center justify-center group"
                               title={`+${item.latin} (${item.desc})`}
                             >
                               <span className="text-xl aksara-sunda mb-0.5">◌{item.aksara}</span>
@@ -214,7 +214,7 @@ export default function Converter() {
               </div>
 
               <div className="flex flex-col relative">
-                <div className="flex justify-between items-end mb-2">
+                <div className="flex flex-wrap justify-between items-end gap-2 mb-2">
                   <label className="text-riksa-brown-dark font-bold ml-2 text-sm uppercase tracking-wider">
                     Hasil Transliterasi
                   </label>
@@ -228,7 +228,7 @@ export default function Converter() {
                   </button>
                 </div>
                 <div 
-                  className={`w-full h-48 p-5 bg-riksa-brown-dark/5 border-2 border-riksa-brown-dark/5 rounded-2xl overflow-y-auto text-xl text-riksa-brown-dark ${mode === 'latin-to-sunda' ? 'aksara-sunda text-3xl' : 'font-sans'}`}
+                  className={`w-full h-44 sm:h-48 p-4 sm:p-5 bg-riksa-brown-dark/5 border-2 border-riksa-brown-dark/5 rounded-2xl overflow-y-auto break-words text-base sm:text-xl text-riksa-brown-dark ${mode === 'latin-to-sunda' ? 'aksara-sunda text-2xl sm:text-3xl' : 'font-sans'}`}
                 >
                   {output || <span className="opacity-30">Hasil akan muncul di sini...</span>}
                 </div>
@@ -255,9 +255,9 @@ export default function Converter() {
                   {/* Swara (Vokal Mandiri) */}
                   <div>
                     <h4 className="font-bold text-riksa-orange mb-4 uppercase tracking-wider text-sm border-b border-riksa-orange/20 pb-2">Aksara Swara (Vokal Mandiri)</h4>
-                    <div className="grid grid-cols-4 md:grid-cols-7 gap-3">
+                    <div className="grid grid-cols-3 min-[420px]:grid-cols-4 md:grid-cols-7 gap-2 sm:gap-3">
                       {DICT_SWARA.map(item => (
-                        <div key={item.latin} className="bg-white border border-riksa-brown-dark/10 rounded-xl p-3 text-center flex flex-col items-center justify-center shadow-sm">
+                        <div key={item.latin} className="bg-white border border-riksa-brown-dark/10 rounded-xl p-2.5 sm:p-3 text-center flex flex-col items-center justify-center shadow-sm">
                           <span className="aksara-sunda text-2xl text-riksa-brown-dark mb-1">{item.aksara}</span>
                           <span className="text-xs font-bold text-riksa-brown-dark/50 uppercase">{item.latin}</span>
                         </div>
@@ -268,9 +268,9 @@ export default function Converter() {
                   {/* Ngalagena (Konsonan Dasar) */}
                   <div>
                     <h4 className="font-bold text-riksa-orange mb-4 uppercase tracking-wider text-sm border-b border-riksa-orange/20 pb-2">Aksara Ngalagena (Konsonan Dasar)</h4>
-                    <div className="grid grid-cols-4 md:grid-cols-7 gap-3">
+                    <div className="grid grid-cols-3 min-[420px]:grid-cols-4 md:grid-cols-7 gap-2 sm:gap-3">
                       {DICT_NGALAGENA.map(item => (
-                        <div key={item.latin} className="bg-white border border-riksa-brown-dark/10 rounded-xl p-3 text-center flex flex-col items-center justify-center shadow-sm">
+                        <div key={item.latin} className="bg-white border border-riksa-brown-dark/10 rounded-xl p-2.5 sm:p-3 text-center flex flex-col items-center justify-center shadow-sm">
                           <span className="aksara-sunda text-2xl text-riksa-brown-dark mb-1">{item.aksara}</span>
                           <span className="text-xs font-bold text-riksa-brown-dark/50 uppercase">{item.latin}</span>
                         </div>
@@ -286,9 +286,9 @@ export default function Converter() {
                       {/* Di luhureun (di atas) */}
                       <div>
                         <p className="text-xs font-bold text-riksa-brown-dark/60 mb-2 ml-1">Nu ditulis di luhureun aksara ngalagena (di atas)</p>
-                        <div className="grid grid-cols-3 md:grid-cols-5 gap-3">
+                        <div className="grid grid-cols-2 min-[420px]:grid-cols-3 md:grid-cols-5 gap-2 sm:gap-3">
                           {DICT_RARANGKEN_ATAS.map(item => (
-                            <div key={item.nama} className="bg-white border border-riksa-brown-dark/10 rounded-xl p-3 text-center flex flex-col items-center justify-center shadow-sm">
+                            <div key={item.nama} className="bg-white border border-riksa-brown-dark/10 rounded-xl p-2.5 sm:p-3 text-center flex flex-col items-center justify-center shadow-sm">
                               <div className="flex items-center gap-0.5 mb-1">
                                 <span className="text-riksa-brown-dark/30 text-lg">◌</span>
                                 <span className="aksara-sunda text-2xl text-riksa-brown-dark -ml-1">{item.aksara}</span>
@@ -303,9 +303,9 @@ export default function Converter() {
                       {/* Di handapeun (di bawah) */}
                       <div>
                         <p className="text-xs font-bold text-riksa-brown-dark/60 mb-2 ml-1">Nu ditulis di handapeun aksara ngalagena (di bawah)</p>
-                        <div className="grid grid-cols-3 md:grid-cols-3 gap-3">
+                        <div className="grid grid-cols-2 min-[420px]:grid-cols-3 gap-2 sm:gap-3">
                           {DICT_RARANGKEN_BAWAH.map(item => (
-                            <div key={item.nama} className="bg-white border border-riksa-brown-dark/10 rounded-xl p-3 text-center flex flex-col items-center justify-center shadow-sm">
+                            <div key={item.nama} className="bg-white border border-riksa-brown-dark/10 rounded-xl p-2.5 sm:p-3 text-center flex flex-col items-center justify-center shadow-sm">
                               <div className="flex items-center gap-0.5 mb-1">
                                 <span className="text-riksa-brown-dark/30 text-lg">◌</span>
                                 <span className="aksara-sunda text-2xl text-riksa-brown-dark -ml-1">{item.aksara}</span>
@@ -320,9 +320,9 @@ export default function Converter() {
                       {/* Sajajar (sejajar) */}
                       <div>
                         <p className="text-xs font-bold text-riksa-brown-dark/60 mb-2 ml-1">Nu ditulis sajajar jeung aksara ngalagena (sejajar)</p>
-                        <div className="grid grid-cols-3 md:grid-cols-5 gap-3">
+                        <div className="grid grid-cols-2 min-[420px]:grid-cols-3 md:grid-cols-5 gap-2 sm:gap-3">
                           {DICT_RARANGKEN_SEJAJAR.map(item => (
-                            <div key={item.nama} className="bg-white border border-riksa-brown-dark/10 rounded-xl p-3 text-center flex flex-col items-center justify-center shadow-sm">
+                            <div key={item.nama} className="bg-white border border-riksa-brown-dark/10 rounded-xl p-2.5 sm:p-3 text-center flex flex-col items-center justify-center shadow-sm">
                               <div className="flex items-center gap-0.5 mb-1">
                                 <span className="text-riksa-brown-dark/30 text-lg">◌</span>
                                 <span className="aksara-sunda text-2xl text-riksa-brown-dark -ml-1">{item.aksara}</span>
@@ -339,9 +339,9 @@ export default function Converter() {
                   {/* Aksara Wilangan (Angka) */}
                   <div>
                     <h4 className="font-bold text-riksa-orange mb-4 uppercase tracking-wider text-sm border-b border-riksa-orange/20 pb-2">Aksara Wilangan (Angka)</h4>
-                    <div className="grid grid-cols-5 md:grid-cols-10 gap-3">
+                    <div className="grid grid-cols-3 min-[420px]:grid-cols-5 md:grid-cols-10 gap-2 sm:gap-3">
                       {DICT_WILANGAN.map(item => (
-                        <div key={item.latin} className="bg-white border border-riksa-brown-dark/10 rounded-xl p-3 text-center flex flex-col items-center justify-center shadow-sm">
+                        <div key={item.latin} className="bg-white border border-riksa-brown-dark/10 rounded-xl p-2.5 sm:p-3 text-center flex flex-col items-center justify-center shadow-sm">
                           <span className="aksara-sunda text-2xl text-riksa-brown-dark mb-1">{item.aksara}</span>
                           <span className="text-xs font-bold text-riksa-brown-dark/50">{item.latin}</span>
                         </div>

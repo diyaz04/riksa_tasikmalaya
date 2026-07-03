@@ -8,14 +8,14 @@ export default function Gallery() {
   ];
 
   return (
-    <section id="gallery" className="py-24 bg-riksa-cream relative">
-      <div className="container mx-auto px-6">
-        <FadeIn className="text-center mb-16">
-          <h2 className="font-serif text-4xl text-riksa-brown-dark font-bold mb-4">Galeri & Karya</h2>
+    <section id="gallery" className="py-16 md:py-24 bg-riksa-cream relative">
+      <div className="container mx-auto px-4 sm:px-6">
+        <FadeIn className="text-center mb-10 md:mb-16">
+          <h2 className="font-serif text-3xl sm:text-4xl text-riksa-brown-dark font-bold mb-4">Galeri & Karya</h2>
           <div className="w-16 h-1 bg-riksa-orange mx-auto rounded"></div>
         </FadeIn>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {images.map((img, index) => (
             <FadeIn key={img.id} delay={index * 0.2}>
               <div className="group relative aspect-[4/5] overflow-hidden rounded-2xl cursor-pointer shadow-lg border border-riksa-brown-dark/10">
@@ -26,7 +26,7 @@ export default function Gallery() {
                   className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-in-out filter sepia-[.3]"
                 />
                 <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-riksa-brown-dark to-transparent z-20">
-                  <h3 className="text-riksa-cream font-serif text-xl translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                  <h3 className="text-riksa-cream font-serif text-lg sm:text-xl translate-y-0 opacity-100 sm:translate-y-4 sm:opacity-0 sm:group-hover:translate-y-0 sm:group-hover:opacity-100 transition-all duration-300">
                     {img.alt}
                   </h3>
                 </div>

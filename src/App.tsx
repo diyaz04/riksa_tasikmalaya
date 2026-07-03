@@ -10,7 +10,7 @@ import SectionDivider from './components/Shared/SectionDivider';
 
 export default function App() {
   return (
-    <main className="bg-riksa-cream min-h-screen">
+    <main className="bg-riksa-cream min-h-screen overflow-x-hidden">
       <Navbar />
       <Hero />
       <SectionDivider color="text-riksa-brown-dark" />
