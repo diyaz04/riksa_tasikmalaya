@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import LogoFrame from './Shared/LogoFrame';
 
 export default function Hero() {
   return (
@@ -21,10 +22,14 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.8, ease: "easeOut" }}
           className="flex flex-col items-center"
         >
-          {/* Main Title with Brush Script Font */}
-          <h1 className="font-script text-7xl md:text-9xl text-riksa-orange mb-2 drop-shadow-sm">
-            Riksa
-          </h1>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.92 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.7, delay: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="mb-6"
+          >
+            <LogoFrame variant="hero" />
+          </motion.div>
           
           {/* Subtitle in Aksara Sunda */}
           <div className="aksara-sunda text-2xl md:text-3xl text-riksa-gold mb-6 opacity-80">

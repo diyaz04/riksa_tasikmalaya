@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
+import LogoFrame from './Shared/LogoFrame';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -25,8 +26,11 @@ export default function Navbar() {
     <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-riksa-brown-dark/95 backdrop-blur-md shadow-xl py-3' : 'bg-transparent py-5'}`}>
       <div className="container mx-auto px-6 flex justify-between items-center">
         {/* Logo */}
-        <a href="#" className={`font-script text-3xl font-bold transition-colors ${isScrolled ? 'text-riksa-orange' : 'text-riksa-brown-dark'}`}>
-          Riksa
+        <a href="#" aria-label="RIKSA Beranda" className="transition-transform duration-300 hover:-translate-y-0.5">
+          <LogoFrame
+            variant="nav"
+            className={isScrolled ? 'shadow-riksa-gold/20' : 'shadow-riksa-brown-dark/15'}
+          />
         </a>
 
         {/* Desktop Menu */}
