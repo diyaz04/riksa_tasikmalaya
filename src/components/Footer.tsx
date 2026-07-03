@@ -1,5 +1,4 @@
 import { Instagram, Mail, MapPin } from 'lucide-react';
-import LogoFrame from './Shared/LogoFrame';
 
 export default function Footer() {
   return (
@@ -10,7 +9,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
           {/* Brand */}
           <div>
-            <LogoFrame variant="footer" className="mb-5" />
+            <h2 className="font-serif text-4xl font-black text-riksa-orange mb-4 tracking-wide">Riksa</h2>
             <p className="font-sans text-riksa-cream/80 leading-relaxed mb-6">
               Riuangan Aksara Sunda. Membumikan aksara warisan leluhur di Tatar Sukapura.
             </p>
