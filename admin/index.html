@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="id" class="h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Masuk Panel Admin | RIKSA - Riuangan Aksara Sunda</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>ᮛ</text></svg>" />
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sundanese&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS Play CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: '#D4621A',
+              'primary-dark': '#A84810',
+              cream: '#F5EDD8',
+              beige: '#EDE0C4',
+              gold: '#C49A3C',
+              brown: '#2C1A0E',
+              'warm-white': '#FAF6EE',
+              teal: '#5A7A6E'
+            },
+            fontFamily: {
+              serif: ['"Playfair Display"', 'Georgia', 'serif'],
+              sans: ['"Plus Jakarta Sans"', 'Helvetica', 'sans-serif'],
+              aksara: ['"Noto Sans Sundanese"', 'serif']
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      /* Repeating micro-grid background pattern representing Sundanese woven crafts */
+      .batik-pattern {
+        background-image: radial-gradient(#EDE0C4 1px, transparent 1px);
+        background-size: 20px 20px;
+        opacity: 0.15;
+      }
+      .aksara-font {
+        font-family: 'Noto Sans Sundanese', 'Playfair Display', serif;
+      }
+      body {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        background-color: #FAF6EE;
+        color: #2C1A0E;
+      }
+      h1, h2, h3 {
+        font-family: 'Playfair Display', serif;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-[#FAF6EE] via-[#F5EDD8] to-[#EDE0C4] p-4 select-none">
+
+    <!-- Decorative Traditional Ornaments Backdrop -->
+    <!-- Top-Left Ornament -->
+    <div class="absolute top-0 left-0 w-40 h-40 md:w-56 md:h-56 opacity-20 pointer-events-none select-none text-[#D4621A]">
+      <svg width="100%" height="100%" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,0 L100,0 C80,20 60,30 50,50 C30,60 20,80 0,100 Z" fill="currentColor"/>
+        <path d="M0,20 C40,20 60,40 60,80" stroke="#C49A3C" stroke-width="2" stroke-linecap="round"/>
+        <path d="M0,40 C25,40 40,55 40,80" stroke="#C49A3C" stroke-width="1.2" stroke-dasharray="3 3"/>
+      </svg>
+    </div>
+    <!-- Bottom-Right Ornament (Rotated) -->
+    <div class="absolute bottom-0 right-0 w-40 h-40 md:w-56 md:h-56 opacity-20 pointer-events-none select-none text-[#D4621A] transform rotate-180">
+      <svg width="100%" height="100%" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,0 L100,0 C80,20 60,30 50,50 C30,60 20,80 0,100 Z" fill="currentColor"/>
+        <path d="M0,20 C40,20 60,40 60,80" stroke="#C49A3C" stroke-width="2" stroke-linecap="round"/>
+        <path d="M0,40 C25,40 40,55 40,80" stroke="#C49A3C" stroke-width="1.2" stroke-dasharray="3 3"/>
+      </svg>
+    </div>
+
+    <!-- Repeating micro overlay grid -->
+    <div class="absolute inset-0 batik-pattern pointer-events-none"></div>
+
+    <!-- Standalone Error Banner (Hidden unless fetch config fails entirely) -->
+    <div id="db-warning-banner" class="hidden fixed top-4 left-4 right-4 z-50 p-4 rounded-xl bg-amber-50 border border-amber-200 shadow-md">
+      <div class="flex items-center gap-3 text-xs text-amber-800">
+        <svg class="w-5 h-5 text-amber-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+        </svg>
+        <p>
+          <strong>Koneksi Konfigurasi Bermasalah</strong>: Tidak dapat menghubungkan kredensial sistem keamanan Supabase. Harap pastikan environment sudah diisi.
+        </p>
+      </div>
+    </div>
+
+    <!-- MAIN ACCESS CARD -->
+    <div class="w-full max-w-md bg-white rounded-3xl border border-[#EDE0C4] shadow-2xl relative overflow-hidden p-8 sm:p-10 z-10 select-text transition-transform duration-300" id="login-card">
+      
+      <!-- Top Decorative Red Line -->
+      <div class="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-[#D4621A] to-[#C49A3C]"></div>
+
+      <!-- Card Header -->
+      <div class="flex flex-col items-center text-center space-y-4 mb-8">
+        <!-- Logo Emblem -->
+        <a href="/" class="group flex flex-col items-center">
+          <div class="w-16 h-16 rounded-2xl bg-[#D4621A] border-2 border-[#C49A3C] flex items-center justify-center font-bold text-white shadow-md transition-transform group-hover:scale-105">
+            <span class="aksara-font text-3xl">ᮛ</span>
+          </div>
+          <h1 class="text-3xl font-black tracking-wide text-[#2C1A0E] font-serif mt-4 leading-none">
+            RIKSA
+          </h1>
+          <p class="text-[10px] text-stone-500 font-bold uppercase tracking-[0.25em] mt-1.5 leading-none">
+            Riuangan Aksara Sunda
+          </p>
+          <span class="mt-3 inline-block px-3.5 py-1 text-[10px] font-bold uppercase tracking-widest rounded-full bg-[#FAF6EE] text-[#D4621A] border border-[#EDE0C4]">
+            Panel Admin / Dashboard
+          </span>
+        </a>
+      </div>
+
+      <!-- Auth checking placeholder (Visible on page load) -->
+      <div id="auth-loading-overlay" class="py-12 flex flex-col items-center justify-center space-y-3">
+        <div class="animate-spin rounded-full h-8 w-8 border-2 border-[#D4621A] border-t-transparent"></div>
+        <p class="text-xs text-stone-500 font-semibold tracking-wide">Memverifikasi status keamanan sesi...</p>
+      </div>
+
+      <!-- Error Message Container (Global) -->
+      <div id="global-error-box" class="hidden mb-6 p-4 rounded-xl border border-red-200 bg-red-50 flex items-start gap-2.5">
+        <svg class="h-4 w-4 text-red-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+        </svg>
+        <p id="global-error-text" class="text-xs text-red-800 leading-snug font-medium"></p>
+      </div>
+
+      <!-- LOGIN FORM (Hidden initially, active once auth domains load) -->
+      <form id="admin-login-form" class="hidden space-y-5">
+        
+        <!-- Email Input -->
+        <div class="space-y-1.5">
+          <label for="admin-email" class="block text-[11px] font-bold uppercase tracking-wider text-stone-500">Nama Pengguna / Email</label>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-stone-400">
+              <svg class="h-4.5 w-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"></path>
+              </svg>
+            </div>
+            <input 
+              type="email" 
+              id="admin-email" 
+              name="email"
+              placeholder="admin@riksasunda.org" 
+              class="block w-full text-xs pl-10 pr-4 py-3 bg-stone-50 hover:bg-stone-100 focus:bg-white rounded-xl border border-[#EDE0C4] focus:outline-none focus:ring-2 focus:ring-[#D4621A]/30 focus:border-[#D4621A] transition-all text-[#2C1A0E] font-medium" 
+              required
+            />
+          </div>
+        </div>
+
+        <!-- Password Input -->
+        <div class="space-y-1.5">
+          <div class="flex items-center justify-between">
+            <label for="admin-password" class="block text-[11px] font-bold uppercase tracking-wider text-stone-500">Kata Sandi</label>
+            <span class="text-[10px] text-stone-400 font-mono">Kode Akses Pintu</span>
+          </div>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-stone-400">
+              <svg class="h-4.5 w-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+              </svg>
+            </div>
+            <input 
+              type="password" 
+              id="admin-password" 
+              name="password"
+              placeholder="••••••••" 
+              class="block w-full text-xs pl-10 pr-10 py-3 bg-stone-50 hover:bg-stone-100 focus:bg-white rounded-xl border border-[#EDE0C4] focus:outline-none focus:ring-2 focus:ring-[#D4621A]/30 focus:border-[#D4621A] transition-all text-[#2C1A0E] font-medium" 
+              required
+            />
+            <!-- Show/Hide Password Toggle -->
+            <button 
+              type="button" 
+              id="btn-password-toggle" 
+              class="absolute inset-y-0 right-0 pr-3 flex items-center text-stone-400 hover:text-[#D4621A] transition-colors focus:outline-none"
+              title="Lihat Kata Sandi"
+            >
+              <!-- Eye open icon (default block) -->
+              <svg id="eye-icon-open" class="h-4.5 w-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+              </svg>
+              <!-- Eye closed icon (default hidden) -->
+              <svg id="eye-icon-closed" class="h-4.5 w-4.5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button 
+          type="submit" 
+          id="btn-login-submit" 
+          class="w-full mt-6 py-3 px-6 bg-[#D4621A] hover:bg-[#A84810] text-[#FAF6EE] font-bold text-xs uppercase tracking-widest rounded-xl shadow-md border border-transparent transition-all hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2 focus:outline-none"
+        >
+          <span id="btn-submit-text">Masuk Pintu Kelola</span>
+          <!-- Loading Spinner inside button -->
+          <div id="btn-submit-spinner" class="hidden animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
+        </button>
+
+      </form>
+
+      <!-- Bottom Card Metadata Info -->
+      <div class="mt-8 border-t border-[#EDE0C4] pt-5 flex items-center justify-between text-[10px] text-stone-400 font-mono">
+        <a href="/" class="hover:text-[#D4621A] transition-colors font-semibold flex items-center gap-1.5">
+          <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+          </svg>
+          Kembali ke Beranda
+        </a>
+        <span>Sistem RIKSA 2026</span>
+      </div>
+
+    </div>
+
+    <!-- Simple Toast Notification Node -->
+    <div id="custom-toast" class="fixed bottom-4 right-4 bg-[#2C1A0E] text-white py-3.5 px-5 rounded-lg border-l-4 border-[#D4621A] shadow-xl z-50 text-xs font-semibold flex items-center gap-2.5 transform translate-y-24 transition-transform duration-300">
+      <span id="toast-message">Status terverifikasi</span>
+    </div>
+
+    <!-- LOGICAL SCRIPT CONTROLS -->
+    <script type="module">
+      import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+      const authLoader = document.getElementById('auth-loading-overlay');
+      const loginForm = document.getElementById('admin-login-form');
+      const errorBox = document.getElementById('global-error-box');
+      const errorText = document.getElementById('global-error-text');
+      const submitBtn = document.getElementById('btn-login-submit');
+      const submitText = document.getElementById('btn-submit-text');
+      const submitSpinner = document.getElementById('btn-submit-spinner');
+      const toast = document.getElementById('custom-toast');
+      const toastMsg = document.getElementById('toast-message');
+
+      const env = import.meta.env || {};
+      const SUPABASE_URL = env.VITE_SUPABASE_URL || '';
+      const SUPABASE_ANON_KEY = env.VITE_SUPABASE_ANON_KEY || '';
+
+      let serviceAuth = null;
+
+      // Toast notification helper
+      function triggerToast(message) {
+        toastMsg.textContent = message;
+        toast.classList.remove('translate-y-24');
+        setTimeout(() => {
+          toast.classList.add('translate-y-24');
+        }, 3000);
+      }
+
+      // Convert Supabase Auth errors into natural friendly Indonesian text
+      function mapConfigError(code) {
+        const normalized = String(code || '').toLowerCase();
+        if (normalized.includes('invalid') || normalized.includes('credential')) {
+          return 'Alamat email atau kata sandi keliru. Silakan periksa kembali.';
+        }
+        if (normalized.includes('email not confirmed')) {
+          return 'Email admin belum dikonfirmasi di Supabase Auth.';
+        }
+        if (normalized.includes('rate') || normalized.includes('too many')) {
+          return 'Mencoba berulang kali terlalu cepat. Coba beberapa saat lagi.';
+        }
+        if (normalized.includes('fetch') || normalized.includes('network')) {
+          return 'Koneksi internet terputus. Mohon periksa sinyal jaringan Anda.';
+        }
+        switch (code) {
+          case 'auth/invalid-email':
+            return 'Format alamat email yang Anda masukkan tidak valid.';
+          case 'auth/user-disabled':
+            return 'Akun administrator ini dinonaktifkan sementara.';
+          case 'auth/user-not-found':
+          case 'auth/wrong-password':
+          case 'auth/invalid-credential':
+            return 'Alamat email atau kata sandi keliru. Silakan periksa kembali.';
+          case 'auth/too-many-requests':
+            return 'Mencoba berulang kali terlalu cepat. Akun diblokir sementara. Coba beberapa saat lagi.';
+          case 'auth/network-request-failed':
+            return 'Koneksi internet terputus. Mohon periksa sinyal jaringan Anda.';
+          default:
+            return `Terjadi gangguan sistem (${code}). Sila coba beberapa saat lagi.`;
+        }
+      }
+
+      async function bootstrapSupabase() {
+        try {
+          if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+            throw new Error('Missing VITE_SUPABASE_URL or VITE_SUPABASE_ANON_KEY');
+          }
+          serviceAuth = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+          console.log('Supabase instantiated via env config.');
+          return true;
+        } catch (e) {
+          console.error('Supabase init failed:', e);
+          return false;
+        }
+      }
+
+      // Main application process hook
+      async function main() {
+        const isSupabaseReady = await bootstrapSupabase();
+
+        if (!isSupabaseReady) {
+          // Fallback, display system warnings
+          authLoader.classList.add('hidden');
+          errorText.textContent = "Kredensial Supabase tidak terdeteksi. Sistem panel kelola tidak dapat melakukan verifikasi login.";
+          errorBox.classList.remove('hidden');
+          
+          const warningBanner = document.getElementById('db-warning-banner');
+          if (warningBanner) {
+            warningBanner.classList.remove('hidden');
+          }
+          return;
+        }
+
+        // Cek Auth state immediately
+        const { data } = await serviceAuth.auth.getSession();
+        const user = data.session?.user || null;
+        if (user) {
+          triggerToast("Selamat datang kembali! Mengalihkan ke dashboard...");
+          setTimeout(() => {
+            window.location.href = 'dashboard.html';
+          }, 1000);
+        } else {
+          authLoader.classList.add('hidden');
+          loginForm.classList.remove('hidden');
+        }
+
+        serviceAuth.auth.onAuthStateChange((_event, session) => {
+          const user = session?.user || null;
+          if (user) {
+            triggerToast("Selamat datang kembali! Mengalihkan ke dashboard...");
+            setTimeout(() => {
+              window.location.href = 'dashboard.html';
+            }, 1000);
+          } else {
+            authLoader.classList.add('hidden');
+            loginForm.classList.remove('hidden');
+          }
+        });
+      }
+
+      // Start execution on module load
+      main();
+
+      // Password visiblity Toggle implementation
+      const passInput = document.getElementById('admin-password');
+      const btnToggle = document.getElementById('btn-password-toggle');
+      const eyeOpen = document.getElementById('eye-icon-open');
+      const eyeClosed = document.getElementById('eye-icon-closed');
+
+      btnToggle.addEventListener('click', () => {
+        if (passInput.type === 'password') {
+          passInput.type = 'text';
+          eyeOpen.classList.add('hidden');
+          eyeClosed.classList.remove('hidden');
+          btnToggle.title = "Sembunyikan Kata Sandi";
+        } else {
+          passInput.type = 'password';
+          eyeClosed.classList.add('hidden');
+          eyeOpen.classList.remove('hidden');
+          btnToggle.title = "Lihat Kata Sandi";
+        }
+      });
+
+      // Form Submit handler
+      loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        // Hide existing errors
+        errorBox.classList.add('hidden');
+
+        const emailVal = document.getElementById('admin-email').value.trim();
+        const passVal = passInput.value;
+
+        if (!emailVal || !passVal) {
+          errorText.textContent = "Mohon isi alamat email dan kata sandi Anda.";
+          errorBox.classList.remove('hidden');
+          return;
+        }
+
+        // Active loading animations
+        submitSpinner.classList.remove('hidden');
+        submitText.textContent = "Memverifikasi Kunci...";
+        submitBtn.setAttribute('disabled', 'true');
+        submitBtn.classList.add('opacity-80', 'cursor-not-allowed');
+
+        try {
+          // Attempt Login
+          const { data, error } = await serviceAuth.auth.signInWithPassword({
+            email: emailVal,
+            password: passVal,
+          });
+          if (error) throw error;
+          if (data.user) {
+            triggerToast("Akses diizinkan. Selamat datang kembali!");
+            setTimeout(() => {
+              window.location.href = 'dashboard.html';
+            }, 1000);
+          }
+        } catch (authError) {
+          console.error("Login verification failed: ", authError);
+          const mappedMessage = mapConfigError(authError.code || authError.message);
+          errorText.textContent = mappedMessage;
+          errorBox.classList.remove('hidden');
+          
+          // Ripple shake effect on card on error
+          const loginCard = document.getElementById('login-card');
+          loginCard.classList.add('translate-x-1');
+          setTimeout(() => loginCard.classList.remove('translate-x-1'), 150);
+        } finally {
+          // Reset button loaders
+          submitSpinner.classList.add('hidden');
+          submitText.textContent = "Masuk Pintu Kelola";
+          submitBtn.removeAttribute('disabled');
+          submitBtn.classList.remove('opacity-80', 'cursor-not-allowed');
+        }
+      });
+    </script>
+
+  </body>
+</html>

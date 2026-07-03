@@ -1,0 +1,6 @@
+{
+  "name": "Riksa - Riuangan Aksara Sunda",
+  "description": "Website resmi Riksa (Riuangan Aksara Sunda) - Wadah pelestarian budaya dan aksara Sunda.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

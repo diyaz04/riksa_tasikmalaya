@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Noto+Sans+Sundanese&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Plus Jakarta Sans', sans-serif;
+  --font-serif: 'Fraunces', serif;
+  --font-script: 'Caveat', cursive;
+  --font-aksara: 'Noto Sans Sundanese', serif;
+
+  --color-riksa-orange: #D2691E;
+  --color-riksa-orange-light: #E8944A;
+  --color-riksa-brown-dark: #3D2013;
+  --color-riksa-cream: #F5E9D3;
+  --color-riksa-gold: #C9A15C;
+  --color-riksa-white: #FFFFFF;
+  
+  --animate-fade-in: fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-slide-up: slide-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+:root {
+  --font-sans: 'Plus Jakarta Sans', sans-serif;
+  --font-serif: 'Fraunces', serif;
+  --font-script: 'Caveat', cursive;
+  --font-aksara: 'Noto Sans Sundanese', serif;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-riksa-cream);
+  color: var(--color-riksa-brown-dark);
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, .font-serif {
+  font-family: var(--font-serif);
+}
+
+.font-script {
+  font-family: var(--font-script);
+}
+
+.aksara-sunda {
+  font-family: var(--font-aksara);
+  line-height: 1.2;
+}
+
+/* Custom earthy scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-riksa-cream);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-riksa-gold);
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-riksa-orange);
+}
+
+/* Sundanese Repeating Pattern (using 'Ra' character SVG encoded) */
+.pattern-sunda {
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='15' y='40' font-family='sans-serif' font-size='24' fill='%23D2691E' opacity='0.05'%3Eᮛ%3C/text%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+
+.pattern-sunda-dark {
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='15' y='40' font-family='sans-serif' font-size='24' fill='%23F5E9D3' opacity='0.03'%3Eᮛ%3C/text%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
