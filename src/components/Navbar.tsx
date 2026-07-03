@@ -23,7 +23,11 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-riksa-brown-dark/95 backdrop-blur-md shadow-xl py-3' : 'bg-transparent py-5'}`}>
+    <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+      isScrolled
+        ? 'bg-white/18 backdrop-blur-2xl shadow-[0_18px_55px_rgba(61,32,19,0.16)] border-b border-white/30 py-3'
+        : 'bg-transparent py-5'
+    }`}>
       <div className="container mx-auto px-6 flex justify-between items-center">
         {/* Logo */}
         <a href="#" aria-label="RIKSA Beranda" className="transition-transform duration-300 hover:-translate-y-0.5">
@@ -39,7 +43,7 @@ export default function Navbar() {
             <a 
               key={link.name} 
               href={link.href}
-              className={`font-sans font-bold text-sm tracking-wide uppercase transition-colors hover:text-riksa-orange ${isScrolled ? 'text-riksa-cream' : 'text-riksa-brown-dark/80'}`}
+            className="font-sans font-bold text-sm tracking-wide uppercase text-riksa-brown-dark/85 transition-colors hover:text-riksa-orange drop-shadow-[0_1px_10px_rgba(245,233,211,0.75)]"
             >
               {link.name}
             </a>
@@ -47,7 +51,7 @@ export default function Navbar() {
           <div className="flex items-center gap-4">
             <a 
               href="/admin/index.html" 
-              className={`font-sans font-bold text-sm tracking-wide uppercase transition-colors hover:text-riksa-orange ${isScrolled ? 'text-riksa-cream' : 'text-riksa-brown-dark'}`}
+              className="font-sans font-bold text-sm tracking-wide uppercase text-riksa-brown-dark transition-colors hover:text-riksa-orange drop-shadow-[0_1px_10px_rgba(245,233,211,0.75)]"
             >
               Login
             </a>
@@ -62,7 +66,7 @@ export default function Navbar() {
 
         {/* Mobile Menu Toggle */}
         <button 
-          className={`md:hidden ${isScrolled ? 'text-riksa-cream' : 'text-riksa-brown-dark'}`}
+          className="md:hidden text-riksa-brown-dark drop-shadow-[0_1px_10px_rgba(245,233,211,0.75)]"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
           {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
