@@ -12,23 +12,28 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --primary: #D4621A;
-      --primary-dark: #A84810;
-      --primary-light: #F0895C;
-      --cream: #F5EDD8;
-      --beige: #EDE0C4;
-      --gold: #C49A3C;
-      --gold-light: #E8C96A;
-      --brown: #2C1A0E;
-      --brown-mid: #5C3D20;
-      --warm-white: #FAF6EE;
-      --teal: #5A7A6E;
-      --teal-light: #7FA394;
+      /* Tatar Sukapura Parahyangan Sunda Color Palette */
+      --primary: #1E5631;
+      --primary-dark: #143D22;
+      --primary-darker: #0C2817;
+      --primary-light: #2E7D32;
+      --accent-orange: #EA580C;
+      --accent-orange-light: #F97316;
+      --cream: #FAF7EE;
+      --beige: #E6DFCD;
+      --beige-light: #F4EFE2;
+      --gold: #C9972E;
+      --gold-light: #DFC066;
+      --brown: #1C1917;
+      --brown-mid: #57534E;
+      --warm-white: #FAF7EE;
+      --teal: #1E5631;
+      --teal-light: #10B981;
       --sidebar-w: 260px;
-      --header-h: 64px;
-      --radius: 14px;
-      --shadow: 0 4px 24px -4px rgba(44,26,14,0.1);
-      --shadow-lg: 0 12px 40px -6px rgba(44,26,14,0.15);
+      --header-h: 68px;
+      --radius: 16px;
+      --shadow: 0 4px 20px -2px rgba(20,61,34,0.06);
+      --shadow-lg: 0 12px 36px -4px rgba(20,61,34,0.12);
       --font-heading: 'Playfair Display', Georgia, serif;
       --font-body: 'Plus Jakarta Sans', sans-serif;
       --font-aksara: 'Noto Sans Sundanese', serif;
@@ -37,18 +42,27 @@
 
     body {
       font-family: var(--font-body);
-      background: var(--warm-white);
+      background: #FAF7EE;
       color: var(--brown);
       min-height: 100vh;
       display: flex;
       overflow-x: hidden;
+      background-image: 
+        radial-gradient(at 100% 0%, rgba(30,86,49,0.03) 0px, transparent 50%),
+        radial-gradient(at 0% 100%, rgba(201,151,46,0.03) 0px, transparent 50%);
     }
 
     /* ─── SIDEBAR ─── */
+    #dashboard-root {
+      display: flex;
+      width: 100%;
+      min-height: 100vh;
+    }
+
     #sidebar {
       width: var(--sidebar-w);
       min-height: 100vh;
-      background: var(--brown);
+      background: var(--primary-dark);
       display: flex;
       flex-direction: column;
       position: fixed;
@@ -56,111 +70,153 @@
       z-index: 100;
       transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
       overflow-y: auto;
+      border-right: 1px solid rgba(255,255,255,0.06);
     }
     #sidebar::-webkit-scrollbar { width: 4px; }
-    #sidebar::-webkit-scrollbar-thumb { background: var(--brown-mid); border-radius: 4px; }
+    #sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 4px; }
 
-    .sidebar-logo {
-      padding: 20px 20px 16px;
-      border-bottom: 1px solid rgba(255,255,255,0.07);
+    .sidebar-brand {
+      padding: 20px 20px 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
     }
-    .sidebar-logo .aksara {
-      font-family: var(--font-aksara);
-      font-size: 22px;
-      color: var(--gold-light);
+    .sidebar-brand img {
+      height: 38px;
+      width: auto;
+      object-fit: contain;
+    }
+    .sidebar-brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+    .sidebar-brand-title {
+      font-family: var(--font-heading);
+      font-size: 20px;
+      font-weight: 800;
+      color: #F97316;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+    .sidebar-brand-sub {
+      font-size: 10px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.7);
       letter-spacing: 0.05em;
-      display: block;
+    }
+
+    .sidebar-user-pill {
+      margin: 0 16px 14px;
+      padding: 10px 12px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .sidebar-user-pill:hover { background: rgba(255,255,255,0.08); }
+    .sidebar-user-avatar {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: #16A34A;
+      border: 2px solid #86EFAC;
+      color: white;
+      font-weight: 800;
+      font-size: 13px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .sidebar-user-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: white;
       line-height: 1.2;
     }
-    .sidebar-logo .name {
-      font-family: var(--font-heading);
-      font-size: 16px;
-      color: var(--cream);
-      font-weight: 700;
-      display: block;
-      margin-top: 2px;
-    }
-    .sidebar-logo .sub {
+    .sidebar-user-sub {
       font-size: 10px;
-      color: rgba(245,237,216,0.45);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      display: block;
-      margin-top: 3px;
+      color: #86EFAC;
+      opacity: 0.9;
     }
 
     .sidebar-section {
-      padding: 12px 12px 4px;
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: 0.12em;
+      padding: 12px 18px 4px;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: rgba(245,237,216,0.28);
+      color: #86EFAC;
+      opacity: 0.85;
     }
 
-    .sidebar-nav { padding: 4px 8px; flex: 1; }
+    .sidebar-nav { padding: 4px 12px; flex: 1; }
 
     .nav-item {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 9px 12px;
-      border-radius: 9px;
+      gap: 12px;
+      padding: 10px 16px;
+      border-radius: 99px;
       cursor: pointer;
-      color: rgba(245,237,216,0.6);
+      color: rgba(235,245,238,0.78);
       font-size: 13px;
-      font-weight: 500;
+      font-weight: 600;
       transition: all 0.18s ease;
-      margin-bottom: 2px;
+      margin-bottom: 4px;
       border: none;
       background: none;
       width: 100%;
       text-align: left;
     }
-    .nav-item:hover { background: rgba(255,255,255,0.07); color: var(--cream); }
-    .nav-item.active { background: var(--primary); color: white; font-weight: 700; }
-    .nav-item .icon { font-size: 15px; flex-shrink: 0; width: 18px; text-align: center; display: flex; align-items: center; justify-content: center; }
-    .nav-item .icon svg { display: block; opacity: 0.75; transition: opacity 0.18s; }
-    .nav-item:hover .icon svg, .nav-item.active .icon svg { opacity: 1; }
+    .nav-item:hover { background: rgba(255,255,255,0.08); color: #FFFFFF; }
+    .nav-item.active {
+      background: linear-gradient(90deg, #F97316 0%, #EA580C 100%);
+      color: white;
+      font-weight: 700;
+      box-shadow: 0 4px 14px rgba(234, 88, 12, 0.35);
+    }
+    .nav-item .icon { font-size: 16px; flex-shrink: 0; width: 18px; display: flex; align-items: center; justify-content: center; }
+    .nav-item .icon svg { display: block; stroke: currentColor; opacity: 0.85; transition: opacity 0.18s; }
+    .nav-item:hover .icon svg, .nav-item.active .icon svg { opacity: 1; stroke: white; }
     .nav-item .label { flex: 1; }
     .nav-item .badge {
-      background: var(--gold);
-      color: var(--brown);
+      background: #F97316;
+      color: white;
       font-size: 9px;
       font-weight: 800;
-      padding: 2px 6px;
+      padding: 2px 7px;
       border-radius: 99px;
-    }
-    .nav-sub {
-      padding-left: 28px;
-    }
-    .nav-sub .nav-item {
-      font-size: 12px;
-      padding: 7px 12px;
     }
 
     .sidebar-footer {
-      padding: 16px 8px;
-      border-top: 1px solid rgba(255,255,255,0.07);
+      padding: 16px 14px 20px;
+      position: relative;
+      z-index: 2;
+      border-top: 1px solid rgba(255,255,255,0.06);
     }
-    .sidebar-footer .admin-info {
+    .sidebar-contact-pill {
+      background: #0B2915;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      padding: 10px 12px;
       display: flex;
       align-items: center;
       gap: 10px;
-      padding: 8px 12px;
-      border-radius: 9px;
-      background: rgba(255,255,255,0.05);
+      margin-bottom: 12px;
     }
-    .admin-avatar {
-      width: 32px; height: 32px;
-      background: linear-gradient(135deg, var(--primary), var(--gold));
+    .sidebar-contact-icon {
+      width: 28px; height: 28px;
       border-radius: 50%;
+      background: #EA580C;
+      color: white;
       display: flex; align-items: center; justify-content: center;
-      font-size: 13px; font-weight: 800; color: white;
+      font-size: 13px;
       flex-shrink: 0;
     }
-    .admin-name { font-size: 12px; font-weight: 700; color: var(--cream); }
-    .admin-role { font-size: 10px; color: rgba(245,237,216,0.4); }
 
     /* ─── MAIN ─── */
     #main {
@@ -171,18 +227,19 @@
       display: flex;
       flex-direction: column;
       min-height: 100vh;
+      position: relative;
     }
 
     /* ─── HEADER ─── */
     #header {
       height: var(--header-h);
       width: 100%;
-      background: white;
-      border-bottom: 1px solid var(--beige);
+      background: #FAF7EE;
+      border-bottom: 1px solid rgba(30,86,49,0.08);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 28px;
+      padding: 0 32px;
       position: sticky;
       top: 0;
       z-index: 50;
@@ -190,50 +247,54 @@
     }
     .header-title {
       font-family: var(--font-heading);
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--brown);
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: -0.01em;
     }
-    .header-actions { display: flex; align-items: center; gap: 10px; }
+    .header-pill-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 16px;
+      background: white;
+      border: 1px solid #E5E7EB;
+      border-radius: 99px;
+      color: #292524;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+      transition: all 0.18s ease;
+    }
+    .header-pill-btn:hover {
+      background: #F5F5F4;
+      border-color: #D6D3D1;
+    }
+    .header-pill-btn.logout:hover {
+      background: #FEE2E2;
+      border-color: #FCA5A5;
+      color: #991B1B;
+    }
     .header-btn {
-      width: 36px; height: 36px;
-      border-radius: 9px;
-      border: 1px solid var(--beige);
+      width: 38px; height: 38px;
+      border-radius: 10px;
+      border: 1px solid rgba(30,86,49,0.15);
       background: white;
       display: flex; align-items: center; justify-content: center;
       cursor: pointer;
-      font-size: 14px;
-      color: var(--brown-mid);
-      transition: all 0.15s ease;
-      position: relative;
-    }
-    .header-btn:hover { background: var(--cream); border-color: var(--beige); }
-    .notif-dot {
-      width: 7px; height: 7px;
-      background: var(--primary);
-      border-radius: 50%;
-      position: absolute;
-      top: 6px; right: 6px;
-      border: 1px solid white;
-    }
-    .btn-logout {
-      font-size: 11px; font-weight: 700;
-      background: var(--cream);
-      color: var(--brown);
-      border: 1px solid var(--beige);
-      padding: 7px 14px;
-      border-radius: 8px;
-      cursor: pointer;
-      letter-spacing: 0.04em;
+      font-size: 16px;
+      color: var(--primary);
       transition: all 0.15s ease;
     }
-    .btn-logout:hover { background: #fce8d8; border-color: var(--primary); color: var(--primary); }
+    .header-btn:hover { background: #ECFDF5; }
 
     /* ─── CONTENT ─── */
     #content {
       flex: 1;
       width: 100%;
-      padding: 28px;
+      padding: 28px 32px;
       overflow-y: auto;
       box-sizing: border-box;
     }
@@ -249,109 +310,187 @@
       font-family: var(--font-heading);
       font-size: 24px;
       font-weight: 800;
-      color: var(--brown);
+      color: var(--primary-dark);
       margin-bottom: 4px;
     }
     .panel-sub {
       font-size: 13px;
       color: var(--brown-mid);
-      opacity: 0.7;
+      opacity: 0.8;
       margin-bottom: 24px;
     }
 
-    /* ─── CARDS ─── */
-    .card {
-      background: white;
-      border: 1px solid var(--beige);
-      border-radius: var(--radius);
-      padding: 20px 24px;
-      box-shadow: var(--shadow);
-    }
-    .card-title {
-      font-family: var(--font-heading);
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--brown);
-      margin-bottom: 14px;
+    /* ─── WELCOME HERO BANNER ─── */
+    .welcome-banner {
+      position: relative;
+      border-radius: 24px;
+      overflow: hidden;
+      margin-bottom: 24px;
+      min-height: 155px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      padding: 24px 32px;
+      background: #FAF7EE;
+      border: 1px solid rgba(30,86,49,0.08);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.03);
     }
-    .card-title::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--beige);
+    .welcome-banner .bg-scenery {
+      position: absolute;
+      right: 0; top: 0; bottom: 0;
+      height: 100%;
+      max-width: 58%;
+      object-fit: cover;
+      object-position: left center;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .welcome-banner .bg-fade {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, #FAF7EE 45%, rgba(250,247,238,0.85) 65%, transparent 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+    .welcome-banner .content-text {
+      position: relative;
+      z-index: 2;
+      max-width: 520px;
+    }
+    .welcome-title {
+      font-family: var(--font-heading);
+      font-size: 32px;
+      font-weight: 900;
+      color: var(--primary-dark);
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+      line-height: 1.15;
+    }
+    .welcome-sub {
+      font-size: 14px;
+      color: #57534E;
+      line-height: 1.5;
     }
 
     /* ─── STAT CARDS ─── */
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
       gap: 16px;
-      margin-bottom: 28px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 1200px) {
+      .stats-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
     }
     .stat-card {
       background: white;
-      border: 1px solid var(--beige);
+      border: 1px solid rgba(30,86,49,0.08);
       border-radius: var(--radius);
       padding: 20px;
       box-shadow: var(--shadow);
       position: relative;
       overflow: hidden;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
     .stat-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
-    .stat-card::before {
-      content: '';
+    .stat-card .accent-bar {
       position: absolute;
       top: 0; left: 0; right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--primary), var(--gold));
+      height: 3.5px;
+      background: var(--primary);
     }
-    .stat-card .stat-icon {
-      font-size: 28px;
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      width: 44px;
-      height: 44px;
+    .stat-card.alert .accent-bar {
+      background: var(--accent-orange-light);
+    }
+    .stat-card .stat-icon-wrap {
+      width: 42px; height: 42px;
       border-radius: 12px;
-      background: rgba(212,98,26,0.08);
+      background: #ECFDF5;
       color: var(--primary);
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 12px;
     }
-    .stat-card.highlight .stat-icon {
-      background: rgba(255,255,255,0.15);
-      color: white;
+    .stat-card.alert .stat-icon-wrap {
+      background: #FFF7ED;
+      color: var(--accent-orange);
+    }
+    .stat-card .stat-label {
+      font-size: 11px;
+      font-weight: 800;
+      color: #57534E;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
     }
     .stat-card .stat-val {
       font-family: var(--font-heading);
       font-size: 32px;
-      font-weight: 800;
+      font-weight: 900;
       color: var(--brown);
       line-height: 1;
     }
-    .stat-card .stat-label {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--brown-mid);
-      opacity: 0.65;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      margin-top: 4px;
-    }
     .stat-card .stat-sub {
       font-size: 11px;
-      color: var(--teal);
+      color: #78716C;
       font-weight: 600;
-      margin-top: 8px;
+      margin-top: 10px;
     }
-    .stat-card.highlight { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); border-color: transparent; }
-    .stat-card.highlight::before { background: rgba(255,255,255,0.3); }
-    .stat-card.highlight .stat-val,
-    .stat-card.highlight .stat-label,
-    .stat-card.highlight .stat-sub { color: white; opacity: 1; }
+    .stat-card.active-emerald {
+      background: linear-gradient(135deg, #1E5631 0%, #164E2A 50%, #0F2E1B 100%);
+      border-color: transparent;
+    }
+    .stat-card.active-emerald .stat-icon-wrap {
+      background: rgba(255,255,255,0.18);
+      color: white;
+    }
+    .stat-card.active-emerald .stat-label { color: rgba(255,255,255,0.85); }
+    .stat-card.active-emerald .stat-val { color: white; }
+    .stat-card.active-emerald .stat-sub { color: #86EFAC; }
+    .stat-card.active-emerald .bg-cloud-overlay {
+      position: absolute;
+      right: 0; bottom: 0;
+      width: 80px; height: auto;
+      opacity: 0.25;
+      pointer-events: none;
+    }
+
+    /* ─── DASHBOARD BOTTOM GRID ─── */
+    .dashboard-bottom-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 900px) {
+      .dashboard-bottom-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ─── CARDS ─── */
+    .card {
+      background: white;
+      border: 1px solid rgba(30,86,49,0.08);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+    .card-title {
+      font-family: var(--font-heading);
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--primary-dark);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .card-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(30,86,49,0.08);
+    }
 
     /* ─── FORMS ─── */
     .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
@@ -369,7 +508,7 @@
       font-family: var(--font-body);
       font-size: 13px;
       color: var(--brown);
-      background: var(--warm-white);
+      background: white;
       border: 1.5px solid var(--beige);
       border-radius: 9px;
       padding: 9px 13px;
@@ -379,7 +518,7 @@
     }
     input:focus, select:focus, textarea:focus {
       border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(212,98,26,0.1);
+      box-shadow: 0 0 0 3px rgba(30,86,49,0.12);
     }
     textarea { resize: vertical; min-height: 90px; }
 
@@ -399,7 +538,7 @@
       gap: 6px;
     }
     .btn-primary { background: var(--primary); color: white; }
-    .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(212,98,26,0.3); }
+    .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(30,86,49,0.3); }
     .btn-secondary { background: var(--cream); color: var(--brown); border: 1.5px solid var(--beige); }
     .btn-secondary:hover { background: var(--beige); }
     .btn-danger { background: #FEE2E2; color: #991B1B; border: 1.5px solid #FCA5A5; }
@@ -410,22 +549,22 @@
     .btn-icon { padding: 7px; border-radius: 7px; }
 
     /* ─── TABLE ─── */
-    .table-wrap { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--beige); }
+    .table-wrap { overflow-x: auto; border-radius: var(--radius); border: 1px solid rgba(30,86,49,0.08); background: white; }
     table { width: 100%; border-collapse: collapse; }
-    thead { background: var(--cream); }
+    thead { background: #FAF7EE; }
     th {
       font-size: 10px;
       font-weight: 800;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--brown-mid);
-      padding: 11px 16px;
+      color: var(--primary-dark);
+      padding: 12px 16px;
       text-align: left;
-      border-bottom: 1px solid var(--beige);
+      border-bottom: 1px solid rgba(30,86,49,0.1);
     }
-    td { padding: 12px 16px; font-size: 13px; border-bottom: 1px solid rgba(237,224,196,0.5); }
+    td { padding: 12px 16px; font-size: 13px; border-bottom: 1px solid rgba(30,86,49,0.05); }
     tr:last-child td { border-bottom: none; }
-    tr:hover td { background: rgba(245,237,216,0.4); }
+    tr:hover td { background: rgba(250,247,238,0.7); }
     .td-actions { display: flex; gap: 6px; justify-content: flex-end; }
 
     /* ─── BADGE ─── */
@@ -440,15 +579,11 @@
     .badge-red { background: #FEE2E2; color: #991B1B; }
     .badge-blue { background: #DBEAFE; color: #1E40AF; }
     .badge-gray { background: #F3F4F6; color: #374151; }
-    .badge-primary { background: rgba(212,98,26,0.1); color: var(--primary); }
+    .badge-primary { background: rgba(30,86,49,0.1); color: var(--primary); }
 
     /* ─── TOGGLE ─── */
-    .toggle-wrap {
-      display: flex; align-items: center; gap: 14px;
-    }
-    .toggle {
-      position: relative; width: 52px; height: 28px; cursor: pointer;
-    }
+    .toggle-wrap { display: flex; align-items: center; gap: 14px; }
+    .toggle { position: relative; width: 52px; height: 28px; cursor: pointer; }
     .toggle input { display: none; }
     .toggle-track {
       position: absolute; inset: 0;
@@ -463,284 +598,123 @@
       width: 22px; height: 22px;
       background: white;
       border-radius: 50%;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
       transition: transform 0.2s cubic-bezier(0.16,1,0.3,1);
     }
     .toggle input:checked ~ .toggle-thumb { transform: translateX(24px); }
-    .toggle-label { font-size: 13px; font-weight: 600; color: var(--brown); }
 
     /* ─── MODAL ─── */
     .modal-overlay {
       position: fixed; inset: 0;
-      background: rgba(44,26,14,0.45);
+      background: rgba(12,40,23,0.5);
       backdrop-filter: blur(4px);
       z-index: 200;
       display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
+      align-items: center; justify-content: center;
+      padding: 20px;
     }
     .modal-overlay.open { display: flex; }
     .modal {
       background: white;
-      border-radius: 18px;
-      padding: 28px;
-      max-width: 540px;
-      width: 100%;
-      box-shadow: 0 24px 60px rgba(44,26,14,0.2);
-      animation: modalIn 0.3s cubic-bezier(0.16,1,0.3,1) both;
+      border-radius: 20px;
+      width: 100%; max-width: 680px;
       max-height: 90vh;
-      overflow-y: auto;
+      display: flex; flex-direction: column;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+      border: 1px solid rgba(30,86,49,0.1);
+      animation: modalIn 0.25s cubic-bezier(0.16,1,0.3,1) both;
+      overflow: hidden;
     }
-    .modal.wide { max-width: 720px; }
     @keyframes modalIn {
-      from { opacity: 0; transform: scale(0.93) translateY(16px); }
+      from { opacity: 0; transform: scale(0.96) translateY(10px); }
       to   { opacity: 1; transform: scale(1) translateY(0); }
     }
     .modal-header {
+      padding: 20px 24px;
+      background: #FAF7EE;
+      border-bottom: 1px solid rgba(30,86,49,0.08);
       display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 20px;
     }
     .modal-title {
       font-family: var(--font-heading);
-      font-size: 18px; font-weight: 800; color: var(--brown);
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--primary-dark);
     }
     .modal-close {
       width: 32px; height: 32px;
-      border-radius: 8px; border: 1.5px solid var(--beige);
-      background: var(--cream); cursor: pointer;
-      font-size: 15px; color: var(--brown-mid);
+      border-radius: 8px;
+      border: 1px solid rgba(30,86,49,0.1);
+      background: white;
+      cursor: pointer;
       display: flex; align-items: center; justify-content: center;
+      font-size: 16px; color: var(--brown-mid);
+      transition: all 0.15s;
     }
-    .modal-close:hover { background: var(--beige); }
+    .modal-close:hover { background: #FEE2E2; color: #991B1B; border-color: #FCA5A5; }
+    .modal-body { padding: 24px; overflow-y: auto; flex: 1; }
     .modal-footer {
-      display: flex; gap: 10px; justify-content: flex-end;
-      margin-top: 22px; padding-top: 16px;
-      border-top: 1px solid var(--beige);
+      padding: 16px 24px;
+      border-top: 1px solid rgba(30,86,49,0.08);
+      background: #FAF7EE;
+      display: flex; justify-content: flex-end; gap: 10px;
     }
 
     /* ─── TOAST ─── */
     #toast {
       position: fixed;
-      bottom: 28px; right: 28px;
-      background: var(--brown);
-      color: var(--cream);
-      padding: 13px 20px;
+      bottom: 24px; right: 24px;
+      background: #0F2E1B;
+      color: white;
+      padding: 12px 18px;
       border-radius: 12px;
-      border-left: 4px solid var(--primary);
-      box-shadow: 0 12px 30px rgba(44,26,14,0.3);
-      z-index: 999;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.25);
       font-size: 13px; font-weight: 600;
-      display: flex; align-items: center; gap: 10px;
-      transform: translateY(120%);
-      transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
-      max-width: 320px;
+      display: flex; align-items: center; gap: 8px;
+      z-index: 999;
+      transform: translateY(80px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+      pointer-events: none;
+      border: 1px solid rgba(255,255,255,0.15);
     }
-    #toast.show { transform: translateY(0); }
-    #toast.error { border-left-color: #EF4444; }
+    #toast.show { transform: translateY(0); opacity: 1; pointer-events: auto; }
+    #toast.error { background: #991B1B; border-color: rgba(255,255,255,0.2); }
+    #toast-icon { font-size: 15px; }
 
-    /* ─── FILTER BAR ─── */
-    .filter-bar {
-      display: flex; align-items: center; gap: 10px;
-      margin-bottom: 16px; flex-wrap: wrap;
-    }
-    .filter-bar input[type="text"] { max-width: 220px; }
-    .filter-tab {
-      font-size: 11px; font-weight: 700;
-      padding: 6px 14px; border-radius: 7px;
-      border: 1.5px solid var(--beige);
-      background: white; color: var(--brown-mid);
-      cursor: pointer; transition: all 0.15s ease;
-    }
-    .filter-tab.active { background: var(--primary); color: white; border-color: var(--primary); }
-    .filter-tab:hover:not(.active) { background: var(--cream); }
-
-    /* ─── UPLOAD ZONE ─── */
-    .upload-zone {
-      border: 2px dashed var(--beige);
-      border-radius: var(--radius);
-      padding: 28px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.18s ease;
-      background: var(--warm-white);
-    }
-    .upload-zone:hover { border-color: var(--primary); background: rgba(212,98,26,0.03); }
-    .upload-zone .upload-icon { font-size: 36px; margin-bottom: 8px; }
-    .upload-zone p { font-size: 12px; color: var(--brown-mid); }
-    .upload-zone span { font-size: 11px; color: var(--primary); font-weight: 700; }
-
-    /* ─── RICH EDITOR ─── */
-    .editor-toolbar {
-      display: flex; gap: 4px; flex-wrap: wrap;
-      background: var(--cream);
-      padding: 8px 10px;
-      border: 1.5px solid var(--beige);
-      border-bottom: none;
-      border-radius: 9px 9px 0 0;
-    }
-    .editor-toolbar button {
-      font-size: 11px; font-weight: 800;
-      padding: 4px 9px; border-radius: 5px;
-      border: 1.5px solid transparent;
-      background: white; color: var(--brown);
-      cursor: pointer; transition: all 0.12s ease;
-    }
-    .editor-toolbar button:hover { border-color: var(--primary); color: var(--primary); }
-    .editor-content {
-      font-family: var(--font-body);
-      font-size: 13px; color: var(--brown);
-      background: var(--warm-white);
-      border: 1.5px solid var(--beige);
-      border-radius: 0 0 9px 9px;
-      padding: 12px;
-      min-height: 200px;
-      outline: none;
-    }
-    .editor-content:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(212,98,26,0.1); }
-
-    /* ─── TAG INPUT ─── */
-    .tag-container {
-      display: flex; flex-wrap: wrap; gap: 6px;
-      padding: 8px 10px;
-      background: var(--warm-white);
-      border: 1.5px solid var(--beige);
-      border-radius: 9px;
-      min-height: 44px;
-      cursor: text;
-      align-items: center;
-    }
-    .tag-container:focus-within { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(212,98,26,0.1); }
-    .tag {
-      display: inline-flex; align-items: center; gap: 5px;
-      background: var(--cream); border: 1px solid var(--beige);
-      padding: 3px 8px; border-radius: 6px;
-      font-size: 12px; font-weight: 600; color: var(--brown);
-    }
-    .tag-remove { cursor: pointer; color: var(--brown-mid); font-size: 13px; }
-    .tag-remove:hover { color: var(--primary); }
-    .tag-input {
-      border: none; background: transparent; outline: none;
-      font-family: var(--font-body); font-size: 13px; color: var(--brown);
-      flex: 1; min-width: 80px;
-    }
-
-    /* ─── GALERI GRID ─── */
-    .galeri-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 12px;
-    }
-    .galeri-item {
-      border-radius: 10px;
-      overflow: hidden;
-      border: 1.5px solid var(--beige);
-      background: white;
-      transition: all 0.18s ease;
-      cursor: pointer;
-      position: relative;
-    }
-    .galeri-item:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: var(--shadow); }
-    .galeri-item img {
-      width: 100%; aspect-ratio: 4/3;
-      object-fit: cover; display: block;
-    }
-    .galeri-placeholder {
-      width: 100%; aspect-ratio: 4/3;
-      display: flex; align-items: center; justify-content: center;
-      background: var(--cream); font-size: 32px;
-    }
-    .galeri-meta { padding: 8px 10px; }
-    .galeri-meta .g-title { font-size: 11px; font-weight: 700; color: var(--brown); }
-    .galeri-meta .g-cat { font-size: 10px; color: var(--brown-mid); opacity: 0.6; }
-    .galeri-check {
-      position: absolute; top: 8px; left: 8px;
-      width: 20px; height: 20px;
-      background: white; border: 2px solid var(--beige);
-      border-radius: 5px; display: flex; align-items: center; justify-content: center;
-      font-size: 11px; color: var(--primary);
-    }
-    .galeri-item.selected .galeri-check { background: var(--primary); border-color: var(--primary); color: white; }
-    .galeri-visible-badge {
-      position: absolute; top: 8px; right: 8px;
-    }
-
-    /* ─── REKRUTMEN TOGGLE HERO ─── */
-    .rekrutmen-hero {
-      background: linear-gradient(135deg, var(--brown) 0%, #3D2410 100%);
-      border-radius: 18px;
-      padding: 28px 32px;
-      display: flex; align-items: center; justify-content: space-between;
+    /* ─── TABS ─── */
+    .tabs-header {
+      display: flex;
+      gap: 4px;
+      border-bottom: 2px solid rgba(30,86,49,0.08);
       margin-bottom: 24px;
-      position: relative; overflow: hidden;
+      padding-bottom: 0;
     }
-    .rekrutmen-hero::after {
-      content: 'ᮛ';
-      font-family: var(--font-aksara);
-      font-size: 120px;
-      color: rgba(255,255,255,0.04);
-      position: absolute; right: 20px; top: -10px;
-      line-height: 1;
+    .tab-btn {
+      padding: 10px 18px;
+      border: none;
+      background: none;
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--brown-mid);
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+      transition: all 0.18s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
-    .rekrutmen-hero h2 { font-family: var(--font-heading); font-size: 20px; color: white; margin-bottom: 4px; }
-    .rekrutmen-hero p { font-size: 12px; color: rgba(245,237,216,0.5); }
-    .status-pill {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 6px 14px; border-radius: 99px;
-      font-size: 11px; font-weight: 800;
-      letter-spacing: 0.05em; text-transform: uppercase;
-      margin-top: 10px;
+    .tab-btn:hover { color: var(--primary); }
+    .tab-btn.active {
+      color: var(--primary);
+      font-weight: 800;
+      border-bottom-color: var(--primary);
     }
-    .status-pill.on { background: rgba(52,211,153,0.2); color: #34D399; border: 1px solid rgba(52,211,153,0.3); }
-    .status-pill.off { background: rgba(239,68,68,0.15); color: #F87171; border: 1px solid rgba(239,68,68,0.25); }
-    .pulse { width: 7px; height: 7px; border-radius: 50%; background: currentColor; animation: pulse-dot 1.5s infinite; }
-    @keyframes pulse-dot { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
-
-    /* ─── ORNAMENT DIVIDER ─── */
-    .ornament { color: var(--gold); font-family: var(--font-aksara); font-size: 18px; opacity: 0.4; }
-
-    /* ─── OVERVIEW CHART PLACEHOLDER ─── */
-    .chart-bar-row {
-      display: flex; align-items: center; gap: 10px; margin-bottom: 8px;
-    }
-    .chart-bar-label { font-size: 11px; font-weight: 700; color: var(--brown-mid); width: 90px; flex-shrink: 0; }
-    .chart-bar-track { flex: 1; height: 8px; background: var(--cream); border-radius: 99px; overflow: hidden; }
-    .chart-bar-fill { height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--primary), var(--gold)); transition: width 0.6s cubic-bezier(0.16,1,0.3,1); }
-    .chart-bar-val { font-size: 11px; font-weight: 700; color: var(--brown); width: 28px; text-align: right; flex-shrink: 0; }
-
-    /* ─── RESPONSIVE ─── */
-    @media (max-width: 768px) {
-      #sidebar { transform: translateX(-100%); }
-      #sidebar.open { transform: translateX(0); }
-      #main { margin-left: 0; width: 100vw; }
-      .form-grid { grid-template-columns: 1fr; }
-      .stats-grid { grid-template-columns: repeat(2, 1fr); }
-      #content { padding: 16px; }
-    }
-
-/* ── PRINT STYLES untuk Kartu Anggota ── */
-@media print {
-  body > *:not(#kartu-print-wrapper) { display: none !important; }
-  #kartu-print-wrapper {
-    display: flex !important;
-    flex-direction: column;
-    align-items: center;
-    gap: 8mm;
-    padding: 0;
-    margin: 0;
-  }
-  .kartu-print-page {
-    width: 85.6mm;
-    height: 54mm;
-    page-break-inside: avoid;
-    overflow: hidden;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
-  @page { size: 90mm 130mm; margin: 5mm; }
-}
-#kartu-print-wrapper { display: none; }
-  </style>
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+</style>
   <!-- Supabase Auth Guard -->
   <script type="module">
     import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
@@ -765,7 +739,7 @@
         window.location.href = '/admin/';
       } else {
         // Show dashboard, set admin email
-        document.getElementById('dashboard-root').style.display = '';
+        document.getElementById('dashboard-root').style.display = 'flex';
         const nameEl = document.getElementById('admin-display-name');
         const emailEl = document.getElementById('admin-display-email');
         const displayName = user.user_metadata?.full_name || user.user_metadata?.name || user.email?.split('@')[0] || 'Administrator';
@@ -802,70 +776,115 @@
 
 <!-- ─── SIDEBAR ─── -->
 <nav id="sidebar">
-  <div class="sidebar-logo" style="display:flex;align-items:center;gap:12px;padding:14px 16px 12px">
-    <div style="flex-shrink:0;width:46px;height:46px;border-radius:50%;border:2px solid var(--gold);box-shadow:0 0 0 3px rgba(196,154,60,0.25),0 0 12px rgba(196,154,60,0.2);overflow:hidden;background:var(--brown-mid)">
-      <img id="sidebar-logo-img" src="https://drive.google.com/uc?export=view&id=1DjEP0uQeCWLUIPDsWPnJ-XbKnRJrQF0D" alt="RIKSA Logo" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.innerHTML='<span style=\'font-family:var(--font-aksara);font-size:22px;color:var(--gold-light);display:flex;align-items:center;justify-content:center;height:100%\'>ᮛ</span>'" />
+  <!-- Subtle Sunda Megamendung line-art at sidebar bottom-right -->
+  <img src="/images/dashboard-megamendung-sidebar.webp" alt="Megamendung Motif" style="position:absolute;right:0;bottom:0;width:125px;height:auto;opacity:0.22;pointer-events:none;z-index:1" />
+
+  <!-- Brand Logo Header -->
+  <a href="/" class="sidebar-brand">
+    <div style="flex-shrink:0;width:42px;height:42px;border-radius:12px;background:white;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,0.15);overflow:hidden;padding:4px">
+      <img src="/images/riksa-logo.png" alt="RIKSA Logo" style="width:100%;height:100%;object-fit:contain" onerror="this.src='/images/riksa-brand-mark-hd.png'" />
     </div>
-    <div>
-      <span class="name" style="font-size:14px">RIKSA Admin</span>
-      <span class="sub">Riuangan Aksara Sunda</span>
+    <div class="sidebar-brand-text">
+      <span class="sidebar-brand-title">riksa</span>
+      <span class="sidebar-brand-sub">Riksa Aksa Sakti</span>
     </div>
+  </a>
+
+  <!-- User Profile Card -->
+  <div class="sidebar-user-pill">
+    <div style="display:flex;align-items:center;gap:10px">
+      <div class="sidebar-user-avatar" id="admin-avatar-letter">RA</div>
+      <div style="min-width:0">
+        <div class="sidebar-user-name" id="admin-display-name">RIKSA Admin</div>
+        <div class="sidebar-user-sub">Riungan Aksara Sunda</div>
+      </div>
+    </div>
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#86EFAC" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
   </div>
 
+  <!-- Navigation Links -->
   <div class="sidebar-nav">
-    <div class="sidebar-section">Utama</div>
+    <div class="sidebar-section">UTAMA</div>
     <button class="nav-item active" onclick="showPanel('beranda',this)">
-      <span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg></span><span class="label">Beranda</span>
+      <span class="icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg></span>
+      <span class="label">Beranda</span>
     </button>
 
-    <div class="sidebar-section">✏️ Editor Landing Page</div>
+    <div class="sidebar-section">EDITOR LANDING PAGE</div>
     <button class="nav-item" onclick="showPanel('lp-hero',this)">
-      <span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></span><span class="label">Beranda / Hero</span>
+      <span class="icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></span>
+      <span class="label">Beranda / Hero</span>
     </button>
     <button class="nav-item" onclick="showPanel('lp-profil',this)">
-      <span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span><span class="label">Profil Organisasi</span>
+      <span class="icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span>
+      <span class="label">Profil Organisasi</span>
     </button>
 
-    <div class="sidebar-section">Konten</div>
+    <div class="sidebar-section">KONTEN</div>
     <button class="nav-item" onclick="showPanel('umum',this)">
-      <span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></span><span class="label">Pengaturan Umum</span>
+      <span class="icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></span>
+      <span class="label">Pengaturan Umum</span>
     </button>
     <button class="nav-item" onclick="showPanel('struktur',this)">
-      <span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="6" height="14" rx="1"/><rect x="9" y="3" width="6" height="18" rx="1"/><rect x="16" y="10" width="6" height="11" rx="1"/></svg></span><span class="label">Struktur Organisasi</span>
+      <span class="icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="6" height="14" rx="1"/><rect x="9" y="3" width="6" height="18" rx="1"/><rect x="16" y="10" width="6" height="11" rx="1"/></svg></span>
+      <span class="label">Struktur Organisasi</span>
     </button>
 
-    <div class="sidebar-section">Publikasi</div>
+    <div class="sidebar-section">PUBLIKASI</div>
     <button class="nav-item" onclick="showPanel('berita',this)">
-      <span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 002-2V4a2 2 0 00-2-2H8a2 2 0 00-2 2v16a2 2 0 01-2 2zm0 0a2 2 0 01-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8z"/></svg></span><span class="label">Kelola Berita</span>
+      <span class="icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 002-2V4a2 2 0 00-2-2H8a2 2 0 00-2 2v16a2 2 0 01-2 2zm0 0a2 2 0 01-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8z"/></svg></span>
+      <span class="label">Kelola Berita</span>
     </button>
     <button class="nav-item" onclick="showPanel('galeri',this)">
-      <span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></span><span class="label">Kelola Galeri</span>
+      <span class="icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></span>
+      <span class="label">Kelola Galeri</span>
+    </button>
+    <div class="sidebar-section">PRODUK & KRIYA</div>
+    <button class="nav-item" onclick="showPanel('produk',this)" id="nav-item-produk">
+      <span class="icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></span>
+      <span class="label">Kelola Produk</span>
+      <span class="badge" id="badge-produk" style="display:none">0</span>
     </button>
 
-    <div class="sidebar-section">Relawan</div>
+    <div class="sidebar-section">RELAWAN</div>
     <button class="nav-item" onclick="showPanel('relawan',this)">
-      <span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></span><span class="label">Kelola Relawan</span>
+      <span class="icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></span>
+      <span class="label">Kelola Relawan</span>
     </button>
     <button class="nav-item" onclick="showPanel('pendaftar',this)">
-      <span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg></span><span class="label">Pendaftar Relawan</span>
+      <span class="icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg></span>
+      <span class="label">Pendaftar Relawan</span>
       <span class="badge" id="badge-pendaftar" style="display:none">0</span>
     </button>
     <button class="nav-item" onclick="showPanel('rekrutmen',this)">
-      <span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></span><span class="label">Pengaturan Rekrutmen</span>
+      <span class="icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></span>
+      <span class="label">Pengaturan Rekrutmen</span>
     </button>
   </div>
 
+  <!-- Bottom Footer with Contact Pill & Action Buttons -->
   <div class="sidebar-footer">
-    <div class="admin-info">
-      <div class="admin-avatar" id="admin-avatar-letter">A</div>
-      <div style="flex:1;min-width:0">
-        <div class="admin-name" id="admin-display-name">Administrator</div>
-        <div class="admin-role" id="admin-display-email" style="font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:.5">admin@riksa.id</div>
+    <!-- Contact Pill -->
+    <div class="sidebar-contact-pill">
+      <div class="sidebar-contact-icon">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      </div>
+      <div style="min-width:0;flex:1">
+        <div style="font-size:11px;font-weight:700;color:white;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">tasikmalayariksa</div>
+        <div style="font-size:9px;color:#86EFAC;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">tasikmalayariksa@gmail.com</div>
       </div>
     </div>
-    <div style="display:flex;gap:8px;margin-top:10px">
-      <a href="/" style="flex:1;display:flex;align-items:center;justify-content:center;gap:5px;padding:7px 10px;background:rgba(245,237,216,0.08);border:1px solid rgba(245,237,216,0.15);border-radius:8px;color:rgba(245,237,216,0.7);font-size:10px;font-weight:700;text-decoration:none;letter-spacing:.04em;transition:all .2s" onmouseover="this.style.background='rgba(245,237,216,0.15)'" onmouseout="this.style.background='rgba(245,237,216,0.08)'">🏠 Beranda</a>
-      <button onclick="doLogout()" style="flex:1;display:flex;align-items:center;justify-content:center;gap:5px;padding:7px 10px;background:rgba(212,98,26,0.15);border:1px solid rgba(212,98,26,0.3);border-radius:8px;color:#f4a878;font-size:10px;font-weight:700;letter-spacing:.04em;cursor:pointer;transition:all .2s" onmouseover="this.style.background='rgba(212,98,26,0.3)'" onmouseout="this.style.background='rgba(212,98,26,0.15)'">⬡ Logout</button>
+
+    <!-- Action Buttons Row -->
+    <div style="display:flex;gap:8px">
+      <a href="/" style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:8px 10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:99px;color:white;font-size:11px;font-weight:700;text-decoration:none;transition:all .18s" onmouseover="this.style.background='rgba(255,255,255,0.12)'" onmouseout="this.style.background='rgba(255,255,255,0.06)'">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>
+        <span>Beranda</span>
+      </a>
+      <button onclick="doLogout()" style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:8px 10px;background:linear-gradient(90deg, #F97316 0%, #EA580C 100%);border:none;border-radius:99px;color:white;font-size:11px;font-weight:700;cursor:pointer;box-shadow:0 2px 8px rgba(234,88,12,0.3);transition:all .18s" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        <span>Logout</span>
+      </button>
     </div>
   </div>
 </nav>
@@ -875,13 +894,24 @@
 
   <!-- HEADER -->
   <header id="header">
-    <div style="display:flex;align-items:center;gap:12px">
-      <button onclick="toggleSidebar()" class="header-btn" style="display:none" id="mobile-menu-btn">☰</button>
+    <div style="display:flex;align-items:center;gap:14px">
+      <button onclick="toggleSidebar()" class="header-btn" id="mobile-menu-btn" title="Toggle Sidebar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
       <div class="header-title" id="header-title">Beranda</div>
     </div>
-    <div class="header-actions">
-      <a href="/" style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:var(--cream);border:1px solid var(--beige);border-radius:8px;color:var(--brown);font-size:11px;font-weight:700;text-decoration:none;transition:all .2s" onmouseover="this.style.background='#ede0c4'" onmouseout="this.style.background='var(--cream)'">← Beranda</a>
-      <button class="btn-logout" onclick="doLogout()">⬡ Logout</button>
+    <div class="header-actions" style="display:flex;align-items:center;gap:12px">
+      <!-- User / Beranda Dropdown Pill Button -->
+      <a href="/" class="header-pill-btn" title="Buka Landing Page">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>Beranda</span>
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+      </a>
+      <!-- Logout Button -->
+      <button class="header-pill-btn logout" onclick="doLogout()" title="Keluar dari Dashboard">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        <span>Logout</span>
+      </button>
     </div>
   </header>
 
@@ -890,56 +920,175 @@
 
     <!-- ─── PANEL 1: BERANDA ─── -->
     <div class="panel active" id="panel-beranda">
-      <div class="panel-title">Selamat Datang 👋</div>
-      <div class="panel-sub">Ringkasan data dan aktivitas terkini RIKSA.</div>
+      
+      <!-- 1. HERO WELCOME BANNER WITH SCENIC SUNDANESE SAUNG BALE -->
+      <div class="welcome-banner">
+        <!-- Ultra HD Clean Saung Bale Scenery (2K) -->
+        <img src="/images/dashboard-saung-clean-2k.webp" alt="Saung Sunda Tatar Sukapura" class="bg-scenery" />
+        <div class="bg-fade"></div>
+        <div class="content-text">
+          <h1 class="welcome-title">Selamat Datang 👋</h1>
+          <p class="welcome-sub">Ringkasan data dan aktivitas terkini RIKSA.</p>
+        </div>
+      </div>
 
+      <!-- 2. 5 STAT CARDS ROW (PERSIS MOCKUP) -->
       <div class="stats-grid">
-        <div class="stat-card highlight">
-          <span class="stat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></span>
-          <div class="stat-val" id="stat-relawan">—</div>
-          <div class="stat-label">Relawan Aktif</div>
-          <div class="stat-sub" style="color:rgba(255,255,255,0.6)">↑ 3 bulan ini</div>
+        <!-- Card 1: Relawan Aktif (Deep Emerald Gradient with Megamendung) -->
+        <div class="stat-card active-emerald">
+          <img src="/images/dashboard-megamendung-card.webp" alt="Megamendung" class="bg-cloud-overlay" />
+          <div class="stat-icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+          </div>
+          <div class="stat-label">RELAWAN AKTIF</div>
+          <div class="stat-val" id="stat-relawan">0</div>
+          <div class="stat-sub">↑ 3 bulan ini</div>
         </div>
+
+        <!-- Card 2: Berita Published (White Card + Green Accent) -->
         <div class="stat-card">
-          <span class="stat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 002-2V4a2 2 0 00-2-2H8a2 2 0 00-2 2v16a2 2 0 01-2 2zm0 0a2 2 0 01-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8z"/></svg></span>
-          <div class="stat-val" id="stat-berita">—</div>
-          <div class="stat-label">Berita Published</div>
+          <div class="accent-bar"></div>
+          <div class="stat-icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 002-2V4a2 2 0 00-2-2H8a2 2 0 00-2 2v16a2 2 0 01-2 2zm0 0a2 2 0 01-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8z"/></svg>
+          </div>
+          <div class="stat-label">BERITA PUBLISHED</div>
+          <div class="stat-val" id="stat-berita">0</div>
           <div class="stat-sub">—</div>
         </div>
+
+        <!-- Card 3: Foto Galeri (White Card + Green Accent) -->
         <div class="stat-card">
-          <span class="stat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></span>
-          <div class="stat-val" id="stat-galeri">—</div>
-          <div class="stat-label">Foto Galeri</div>
+          <div class="accent-bar"></div>
+          <div class="stat-icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          </div>
+          <div class="stat-label">FOTO GALERI</div>
+          <div class="stat-val" id="stat-galeri">0</div>
           <div class="stat-sub">—</div>
         </div>
+
+        <!-- Card 4: Total Pendaftar (White Card + Green Accent) -->
         <div class="stat-card">
-          <span class="stat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg></span>
-          <div class="stat-val" id="stat-pendaftar">—</div>
-          <div class="stat-label">Total Pendaftar</div>
+          <div class="accent-bar"></div>
+          <div class="stat-icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <div class="stat-label">TOTAL PENDAFTAR</div>
+          <div class="stat-val" id="stat-pendaftar">0</div>
           <div class="stat-sub">—</div>
         </div>
-        <div class="stat-card">
-          <span class="stat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span>
-          <div class="stat-val" id="stat-pending" style="color:var(--primary)">—</div>
-          <div class="stat-label">Menunggu Review</div>
-          <div class="stat-sub">Perlu tindakan</div>
+
+        <!-- Card 5: Menunggu Review (White Card + Orange Accent) -->
+        <div class="stat-card alert">
+          <div class="accent-bar"></div>
+          <div class="stat-icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div class="stat-label">MENUNGGU REVIEW</div>
+          <div class="stat-val" id="stat-pending" style="color:#EA580C">0</div>
+          <div class="stat-sub" style="color:#EA580C">
+            <span onclick="showPanel('pendaftar', document.querySelector('[onclick*=\'pendaftar\']'))" style="cursor:pointer;display:inline-flex;align-items:center;gap:4px;font-weight:700">
+              Perlu tindakan →
+            </span>
+          </div>
+        </div>
+
+        <!-- Card 6: Kelola Produk Budaya (Clickable Direct Access) -->
+        <div class="stat-card" style="cursor:pointer;transition:transform .18s, box-shadow .18s" onclick="showPanel('produk', document.getElementById('nav-item-produk'))" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='var(--shadow-lg)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='var(--shadow)'">
+          <div class="accent-bar" style="background:var(--gold)"></div>
+          <div class="stat-icon-wrap" style="color:var(--gold)">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+          </div>
+          <div class="stat-label">PRODUK BUDAYA</div>
+          <div class="stat-val" id="stat-produk-home" style="color:var(--primary)">0</div>
+          <div class="stat-sub" style="color:var(--primary);font-weight:700;display:inline-flex;align-items:center;gap:4px">
+            Kelola Produk →
+          </div>
         </div>
       </div>
 
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
-        <div class="card">
-          <div class="card-title">📊 Distribusi Divisi Relawan</div>
-          <div id="chart-divisi">
-            <div style="text-align:center;padding:20px 0;color:var(--brown-mid);font-size:12px;opacity:.5">Belum ada data relawan.</div>
+      <!-- 3. BOTTOM TWO CARDS (DISTRIBUSI DIVISI RELAWAN & AKTIVITAS TERBARU) -->
+      <div class="dashboard-bottom-grid">
+        
+        <!-- Left Card: Distribusi Divisi Relawan -->
+        <div class="card" style="display:flex;flex-direction:column;justify-content:space-between">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
+            <div style="display:flex;align-items:center;gap:10px">
+              <div style="width:34px;height:34px;border-radius:10px;background:#ECFDF5;color:#1E5631;display:flex;align-items:center;justify-content:center">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+              </div>
+              <h3 style="font-family:var(--font-heading);font-size:16px;font-weight:800;color:var(--primary-dark);margin:0">Distribusi Divisi Relawan</h3>
+            </div>
+            <button onclick="showPanel('relawan', document.querySelector('[onclick*=\'relawan\']'))" style="background:#ECFDF5;color:#1E5631;border:1px solid #A7F3D0;border-radius:99px;padding:6px 14px;font-size:11px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:4px;transition:all .15s" onmouseover="this.style.background='#D1FAE5'" onmouseout="this.style.background='#ECFDF5'">
+              Lihat Detail →
+            </button>
+          </div>
+
+          <!-- Chart Body -->
+          <div id="chart-divisi-wrapper" style="display:flex;align-items:center;justify-content:space-around;gap:20px;flex-wrap:wrap;padding:12px 0 6px">
+            <!-- SVG Donut Chart with Center Cutout -->
+            <div style="position:relative;width:170px;height:170px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <svg id="svg-donut-chart" width="170" height="170" viewBox="0 0 170 170" style="transform:rotate(-90deg)">
+                <circle cx="85" cy="85" r="60" fill="none" stroke="#E5E7EB" stroke-width="20"></circle>
+              </svg>
+              <div style="position:absolute;text-align:center;pointer-events:none">
+                <div id="donut-center-total" style="font-family:var(--font-heading);font-size:26px;font-weight:900;color:#1C1917;line-height:1">0</div>
+                <div style="font-size:11px;font-weight:600;color:#78716C;margin-top:3px">Total</div>
+              </div>
+            </div>
+
+            <!-- Legend List -->
+            <div id="donut-legend-items" style="display:flex;flex-direction:column;gap:12px;min-width:180px;flex:1">
+              <div style="text-align:center;padding:12px 6px;color:#78716C;font-size:12px;line-height:1.5">
+                <div style="font-weight:700;color:#292524;margin-bottom:4px;font-size:13px">Belum Ada Data Relawan</div>
+                <div style="color:#A8A29E;margin-bottom:10px">Distribusi divisi akan muncul otomatis secara real-time setelah relawan didaftarkan.</div>
+                <button onclick="showPanel('relawan', document.querySelector('[onclick*=\'relawan\']'))" style="background:#ECFDF5;color:#1E5631;border:1px solid #A7F3D0;border-radius:99px;padding:5px 14px;font-size:11px;font-weight:700;cursor:pointer;transition:all .15s" onmouseover="this.style.background='#D1FAE5'" onmouseout="this.style.background='#ECFDF5'">
+                  + Tambah Relawan
+                </button>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="card">
-          <div class="card-title">🕐 Aktivitas Terbaru</div>
-          <div id="activity-feed" style="display:flex;flex-direction:column;gap:10px">
-            <div style="text-align:center;padding:20px 0;color:var(--brown-mid);font-size:12px;opacity:.5">Belum ada aktivitas terbaru.</div>
+
+        <!-- Right Card: Aktivitas Terbaru -->
+        <div class="card" style="display:flex;flex-direction:column;justify-content:space-between">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
+            <div style="display:flex;align-items:center;gap:10px">
+              <div style="width:34px;height:34px;border-radius:10px;background:#ECFDF5;color:#1E5631;display:flex;align-items:center;justify-content:center">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <h3 style="font-family:var(--font-heading);font-size:16px;font-weight:800;color:var(--primary-dark);margin:0">Aktivitas Terbaru</h3>
+            </div>
+            <button onclick="showPanel('berita', document.querySelector('[onclick*=\'berita\']'))" style="background:#ECFDF5;color:#1E5631;border:1px solid #A7F3D0;border-radius:99px;padding:6px 14px;font-size:11px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:4px;transition:all .15s" onmouseover="this.style.background='#D1FAE5'" onmouseout="this.style.background='#ECFDF5'">
+              Lihat Semua →
+            </button>
           </div>
+
+          <!-- Activity Timeline -->
+          <div id="activity-timeline" style="display:flex;flex-direction:column;gap:16px;position:relative;padding:6px 4px 6px 12px">
+            <div style="text-align:center;padding:28px 12px;color:#78716C;font-size:12px;line-height:1.6">
+              <div style="font-size:24px;margin-bottom:6px;opacity:0.5">🕐</div>
+              <div style="font-weight:700;color:#292524;margin-bottom:3px;font-size:13px">Belum Ada Aktivitas Terbaru</div>
+              <div style="color:#A8A29E">Aktivitas pendaftaran relawan, publikasi berita, dan galeri akan muncul di sini secara otomatis.</div>
+            </div></div>
         </div>
+
       </div>
+
+      <!-- 4. FOOTER WITH CALLIGRAPHIC MOTTO (PERSIS MOCKUP) -->
+      <footer style="display:flex;align-items:center;justify-content:space-between;padding:24px 0 12px;margin-top:28px;border-top:1px solid rgba(30,86,49,0.1);flex-wrap:wrap;gap:12px">
+        <div style="font-size:12px;color:#78716C;font-weight:600">
+          © 2026 <strong style="color:#1E5631">RIKSA</strong>. Riksa Aksa Sakti
+        </div>
+        <div style="display:flex;align-items:center;gap:12px">
+          <span style="height:1.5px;width:32px;background:linear-gradient(90deg, transparent, #1E5631);border-radius:99px"></span>
+          <span style="font-family:var(--font-heading);font-style:italic;font-weight:700;font-size:14px;color:#1E5631;letter-spacing:0.02em">
+            Membumikan Aksara Sunda di Tatar Sukapura
+          </span>
+          <span style="height:1.5px;width:32px;background:linear-gradient(90deg, #1E5631, transparent);border-radius:99px"></span>
+        </div>
+      </footer>
+
     </div>
 
     <!-- ─── PANEL 2: PENGATURAN UMUM (tabbed) ─── -->
@@ -1383,6 +1532,69 @@
       <div class="galeri-grid" id="galeri-grid">
             <div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--brown-mid);font-size:12px;opacity:.5">Belum ada foto di galeri.</div>
           </div>
+    </div>
+
+    <!-- ─── PANEL: KELOLA PRODUK BUDAYA KHAS SUNDA ─── -->
+    <div class="panel" id="panel-produk">
+      <div class="panel-title">🛍️ Kelola Produk Budaya Khas Sunda</div>
+      <div class="panel-sub">Kelola etalase karya & kriya Sunda, status pesanan (Ready Stock / PO), harga, multi-foto (maksimal 5 foto), dan tentukan Foto Utama (Display).</div>
+
+      <!-- Stats Bar -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:20px">
+        <div class="stat-card" style="padding:14px 16px">
+          <div style="font-size:11px;color:var(--brown-mid);font-weight:600;margin-bottom:4px">Total Produk</div>
+          <div style="font-size:24px;font-weight:800;color:var(--primary)" id="prod-stat-total">0</div>
+        </div>
+        <div class="stat-card" style="padding:14px 16px">
+          <div style="font-size:11px;color:var(--brown-mid);font-weight:600;margin-bottom:4px">Ready Stock</div>
+          <div style="font-size:24px;font-weight:800;color:#16A34A" id="prod-stat-ready">0</div>
+        </div>
+        <div class="stat-card" style="padding:14px 16px">
+          <div style="font-size:11px;color:var(--brown-mid);font-weight:600;margin-bottom:4px">Pre-Order (PO)</div>
+          <div style="font-size:24px;font-weight:800;color:var(--accent-orange)" id="prod-stat-po">0</div>
+        </div>
+      </div>
+
+      <!-- Filter & Action Bar -->
+      <div class="filter-bar" style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:16px">
+        <select id="filter-prod-kategori" onchange="filterProdukTable()" style="width:auto;padding:7px 12px;border-radius:8px;border:1px solid var(--beige)">
+          <option value="all">Semua Kategori</option>
+          <option value="Kerajinan & Kriya">Kerajinan & Kriya</option>
+          <option value="Pakaian & Adat">Pakaian & Adat</option>
+          <option value="Pusaka & Hiasan">Pusaka & Hiasan</option>
+          <option value="Buku & Naskah">Buku & Naskah</option>
+        </select>
+        <select id="filter-prod-status" onchange="filterProdukTable()" style="width:auto;padding:7px 12px;border-radius:8px;border:1px solid var(--beige)">
+          <option value="all">Semua Status (Ready & PO)</option>
+          <option value="ready">Hanya Ready Stock</option>
+          <option value="po">Hanya Pre-Order (PO)</option>
+        </select>
+        <input type="text" id="search-prod-input" oninput="filterProdukTable()" placeholder="Cari nama atau deskripsi produk..." style="flex:1;min-width:180px;padding:7px 12px;border-radius:8px;border:1px solid var(--beige);font-size:12px" />
+        <div style="margin-left:auto;display:flex;gap:8px">
+          <button class="btn btn-secondary btn-sm" onclick="seedDefaultProdukToSupabase()" title="Muat 6 produk budaya khas Sunda standar">🌱 Inisialisasi Produk Bawaan</button>
+          <button class="btn btn-primary" onclick="openModalProduk()">➕ Tambah Produk Baru</button>
+        </div>
+      </div>
+
+      <!-- Table Wrap -->
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:70px">Display</th>
+              <th>Nama Produk</th>
+              <th>Kategori</th>
+              <th>Harga</th>
+              <th>Tipe Pesanan</th>
+              <th>Galeri Foto</th>
+              <th style="text-align:right">Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="tbl-produk">
+            <tr><td colspan="7" style="text-align:center;padding:32px;color:var(--brown-mid);font-size:12px;opacity:.6">Memuat katalog produk...</td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <!-- ─── PANEL 7: KELOLA RELAWAN ─── -->
@@ -1898,6 +2110,136 @@
   </div>
 </div>
 
+<!-- ─── MODAL: KELOLA PRODUK BUDAYA KHAS SUNDA ─── -->
+<div class="modal-overlay" id="modal-produk">
+  <div class="modal wide" style="max-width:780px; max-height:92vh; display:flex; flex-direction:column; background:white; border-radius:24px; box-shadow:0 24px 70px rgba(12,40,23,0.3); overflow:hidden;">
+    
+    <!-- FIXED MODAL HEADER -->
+    <div class="modal-header" style="padding:18px 24px; background:#FAF7EE; border-bottom:1px solid rgba(30,86,49,0.08); display:flex; align-items:center; justify-content:space-between; flex-shrink:0;">
+      <div style="display:flex; align-items:center; gap:10px">
+        <div style="width:36px; height:36px; border-radius:10px; background:rgba(30,86,49,0.1); color:var(--primary); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/>
+          </svg>
+        </div>
+        <div>
+          <div class="modal-title" id="modal-produk-title" style="font-size:17px; font-weight:800; color:var(--primary-dark); font-family:var(--font-heading); margin:0;">
+            Tambah Produk Budaya Sunda
+          </div>
+          <div style="font-size:11px; color:var(--brown-mid); margin-top:2px">Lengkapi detail produk budaya & kelola maksimal 5 foto display</div>
+        </div>
+      </div>
+      <button class="modal-close" onclick="closeModal('modal-produk')">✕</button>
+    </div>
+    
+    <input type="hidden" id="modal-prod-id" />
+
+    <!-- SCROLLABLE MODAL BODY -->
+    <div class="modal-body" style="padding:22px 24px; overflow-y:auto; flex:1; -webkit-overflow-scrolling:touch;">
+      <div class="form-grid">
+        <div class="form-group full">
+          <label>Nama Produk <span style="color:var(--accent-orange)">*</span></label>
+          <input type="text" id="modal-prod-nama" placeholder="Contoh: Payung Geulis Bordir Khas Tasikmalaya" />
+        </div>
+
+        <div class="form-group">
+          <label>Kategori Produk</label>
+          <select id="modal-prod-kategori">
+            <option value="Kerajinan & Kriya">Kerajinan & Kriya</option>
+            <option value="Pakaian & Adat">Pakaian & Adat</option>
+            <option value="Pusaka & Hiasan">Pusaka & Hiasan</option>
+            <option value="Buku & Naskah">Buku & Naskah</option>
+            <option value="Kuliner Tradisional">Kuliner Tradisional</option>
+            <option value="Lainnya">Lainnya</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Harga Satuan (Rp) <span style="color:var(--accent-orange)">*</span></label>
+          <input type="number" id="modal-prod-harga" placeholder="150000" min="0" step="500" />
+        </div>
+
+        <div class="form-group">
+          <label>Tipe Pesanan</label>
+          <select id="modal-prod-tipe" onchange="togglePoEstimate(this.value)">
+            <option value="ready">Ready Stock (Siap Kirim)</option>
+            <option value="po">Pre-Order (PO)</option>
+          </select>
+        </div>
+
+        <div class="form-group" id="group-prod-estimasi-wrap">
+          <div id="prod-ready-hint" style="display:flex; align-items:center; gap:8px; padding:9px 14px; background:#ECFDF5; border:1px solid #A7F3D0; border-radius:10px; color:#166534; font-size:11.5px; font-weight:600; height:100%; box-sizing:border-box;">
+            <span style="font-size:15px; color:#16A34A">✓</span>
+            <span>Stok fisik tersedia & langsung siap dikirim ke pemesan</span>
+          </div>
+          <div id="group-prod-estimasi" style="display:none">
+            <label>Estimasi Waktu PO <span style="color:var(--accent-orange)">*</span></label>
+            <input type="text" id="modal-prod-estimasi" placeholder="Contoh: 3-5 Hari Kerja" />
+          </div>
+        </div>
+
+        <div class="form-group full">
+          <label>Spesifikasi Produk (Bahan, Ukuran, dll.)</label>
+          <input type="text" id="modal-prod-spesifikasi" placeholder="Bahan: Bambu & Kain Katun | Diameter: 65 cm | Asal: Tasikmalaya" />
+        </div>
+
+        <div class="form-group full">
+          <label>Deskripsi Lengkap Produk</label>
+          <textarea id="modal-prod-deskripsi" rows="3" placeholder="Tuliskan latar belakang budaya, keunggulan kriya, atau petunjuk penggunaan..." style="min-height:75px"></textarea>
+        </div>
+      </div>
+
+      <!-- Multi-Photo Manager (Maksimal 5 Foto) -->
+      <div style="margin-top:20px; padding:18px; background:#FAF7EE; border-radius:16px; border:1px solid rgba(201,151,46,0.35);">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-size:13px; font-weight:800; color:var(--primary-dark)">📸 Galeri Multi-Foto Produk</span>
+            <span class="badge" id="modal-prod-photo-counter" style="background:var(--primary); color:white; font-size:10px; padding:3px 9px; border-radius:99px; font-weight:800;">0 / 5 Foto</span>
+          </div>
+          <span style="font-size:11px; color:#92400E; font-weight:700; background:#FEF3C7; padding:3px 10px; border-radius:8px; border:1px solid #FDE68A; display:inline-flex; align-items:center; gap:4px">
+            ⭐ Klik tombol bintang untuk memilih Foto Display Utama
+          </span>
+        </div>
+
+        <!-- Upload Dropzone Card -->
+        <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:14px;">
+          <div onclick="document.getElementById('modal-prod-file-inp').click()" style="border:2px dashed #C9972E; border-radius:12px; padding:18px 20px; text-align:center; cursor:pointer; background:white; transition:all .2s; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;" onmouseover="this.style.borderColor='var(--primary)'; this.style.background='#F0FDF4'" onmouseout="this.style.borderColor='#C9972E'; this.style.background='white'">
+            <div style="font-size:26px;">📁</div>
+            <div style="font-size:13px; font-weight:700; color:var(--primary)">Klik untuk pilih foto dari komputer / HP</div>
+            <div style="font-size:11px; color:var(--brown-mid)">Bisa pilih sekaligus hingga 5 foto (JPG, PNG, WebP) — Otomatis dikompres & tajam</div>
+            <input type="file" id="modal-prod-file-inp" accept="image/*" multiple style="display:none" onchange="handleProdPhotoUpload(this.files)" />
+          </div>
+
+          <!-- URL Input Row -->
+          <div style="display:flex; gap:8px; align-items:center;">
+            <input type="url" id="modal-prod-url-inp" placeholder="Atau paste URL foto online (https://...)" style="flex:1; font-size:12px; padding:8px 12px; border-radius:10px; border:1px solid var(--beige); background:white" />
+            <button type="button" class="btn btn-secondary btn-sm" onclick="addProdPhotoFromUrl()" style="white-space:nowrap; padding:8px 14px; font-weight:700">➕ Tambah URL</button>
+          </div>
+        </div>
+
+        <!-- 5 Visual Photo Slots Grid -->
+        <div id="modal-prod-photos-grid" style="display:grid; grid-template-columns:repeat(5, 1fr); gap:10px; margin-top:14px;">
+          <!-- 5 Slots Rendered dynamically -->
+        </div>
+      </div>
+    </div>
+
+    <!-- FIXED MODAL FOOTER -->
+    <div class="modal-footer" style="padding:16px 24px; background:#FAF7EE; border-top:1px solid rgba(30,86,49,0.08); display:flex; align-items:center; justify-content:space-between; flex-shrink:0;">
+      <div style="font-size:11.5px; color:var(--brown-mid); font-weight:600">
+        Maksimal 5 foto • 1 Foto Display Utama untuk cover depan
+      </div>
+      <div style="display:flex; gap:10px; align-items:center;">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('modal-produk')">Batal</button>
+        <button type="button" class="btn btn-primary" onclick="saveProdukModal()" style="padding:10px 24px; font-weight:800; display:inline-flex; align-items:center; gap:6px;">
+          <span>💾 Simpan Produk</span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 <!-- ─── MODAL: KONFIRMASI HAPUS ─── -->
 <div class="modal-overlay" id="modal-konfirmasi">
   <div class="modal" style="max-width:380px">
@@ -2043,6 +2385,9 @@
 // ─── STATE (live dari Supabase) ───────────────────────────
 let allPendaftarData = [];
 let allGaleriData = [];
+let allProdukData = [];
+let tempProdPhotos = [];
+let tempProdFotoUtamaIndex = 0;
 
 let currentPendaftar = null;
 
@@ -2055,7 +2400,7 @@ function showPanel(id, btn) {
 
   const titles = {
     beranda: 'Beranda', umum: 'Pengaturan Umum', struktur: 'Struktur Organisasi',
-    kontak: 'Info Kontak', berita: 'Kelola Berita', galeri: 'Kelola Galeri',
+    kontak: 'Info Kontak', berita: 'Kelola Berita', galeri: 'Kelola Galeri', produk: '🛍️ Kelola Produk Budaya',
     relawan: 'Kelola Relawan', pendaftar: 'Pendaftar Relawan', rekrutmen: 'Pengaturan Rekrutmen',
     'lp-hero': '✏️ Editor Beranda / Hero', 'lp-profil': '✏️ Editor Profil Organisasi', 'lp-kontak': '✏️ Editor Kontak & Footer',
     'lp-berita': '✏️ Editor Header Berita', 'lp-galeri': '✏️ Editor Header Galeri', 'lp-konverter': '✏️ Editor Section Konverter',
@@ -2066,6 +2411,7 @@ function showPanel(id, btn) {
   if (id === 'relawan') loadRelawanFull();
   if (id === 'pendaftar') loadPendaftarFull();
   if (id === 'galeri') loadGaleriFull();
+  if (id === 'produk') loadProdukFull();
   if (id === 'berita') loadBeritaFull();
   if (id === 'struktur') loadStrukturFull();
   if (id === 'rekrutmen') loadRekrutmen();
@@ -2830,6 +3176,628 @@ async function hapusGaleri(id) {
   loadDashboardStats();
 }
 
+// ─── KATALOG PRODUK BUDAYA KHAS SUNDA (Supabase-backed) ───
+const DEFAULT_CULTURE_PRODUCTS = [
+  {
+    id: 'payung-geulis-tasik',
+    nama: 'Payung Geulis Bordir Khas Tasikmalaya',
+    kategori: 'Kerajinan & Kriya',
+    harga: 165000,
+    tipe_pesanan: 'ready',
+    estimasi_po: 'Ready Stock',
+    deskripsi: 'Payung Geulis legendaris warisan budaya Sunda khas Sukapura Tasikmalaya. Dibuat dengan rangka bambu apus pilihan dan dilukis tangan oleh perajin tradisional dengan motif flora Parahyangan yang anggun.',
+    spesifikasi: 'Bahan: Rangka Bambu Pilihan, Kain Katun & Kertas Kedap Air | Diameter: 65 cm | Pewarna: Cat lukis tangan tahan cuaca | Asal: Indihiang, Tasikmalaya',
+    foto: [
+      'https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=900&q=80'
+    ],
+    foto_utama_index: 0,
+    is_active: true
+  },
+  {
+    id: 'iket-sunda-makuta',
+    nama: 'Iket Sunda Makuta Sinatria (Totopong Bordir Aksara)',
+    kategori: 'Pakaian & Adat',
+    harga: 85000,
+    tipe_pesanan: 'ready',
+    estimasi_po: 'Ready Stock',
+    deskripsi: 'Iket Sunda praktis model Makuta Sinatria dengan sentuhan bordir Aksara Sunda Kaganga yang sarat nilai filosofi kepemimpinan Sunda. Nyaman dipakai seharian untuk acara adat maupun gaya kasual.',
+    spesifikasi: 'Bahan: Katun Primisima Adem & Lembut | Model: Makuta Sinatria Praktis Langsung Pakai | Aksara: Bordir Benang Emas | Ukuran: All Size (Tali Belakang Fleksibel)',
+    foto: [
+      'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1582533561751-ef6f6ab93a2e?auto=format&fit=crop&w=900&q=80'
+    ],
+    foto_utama_index: 0,
+    is_active: true
+  },
+  {
+    id: 'pangsi-sunda-salontreng',
+    nama: 'Setelan Pangsi Sunda Salontreng & Celana Komprang',
+    kategori: 'Pakaian & Adat',
+    harga: 220000,
+    tipe_pesanan: 'po',
+    estimasi_po: '3-5 Hari Kerja',
+    deskripsi: 'Busana adat Sunda pria khas Salontreng dengan kancing batok kelapa alami dan celana komprang yang longgar & sejuk. Cocok untuk upacara seren taun, latihan silat maenpo, maupun peringatan hari budaya.',
+    spesifikasi: 'Bahan: Katun Twill Besway Premium Tebal & Adem | Kancing: Batok Kelapa Asli | Warna: Hitam Polos Tradisional | Pilihan Ukuran: M, L, XL, XXL',
+    foto: [
+      'https://images.unsplash.com/photo-1506152983158-b4a74a01c721?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=900&q=80'
+    ],
+    foto_utama_index: 0,
+    is_active: true
+  },
+  {
+    id: 'kujang-pajajaran-jati',
+    nama: 'Kujang Pajajaran Mini Hiasan Kayu Jati Ukir',
+    kategori: 'Pusaka & Hiasan',
+    harga: 180000,
+    tipe_pesanan: 'ready',
+    estimasi_po: 'Ready Stock',
+    deskripsi: 'Replika artistik Kujang Ciung khas Pajajaran yang diukir dari kayu jati solid berurat indah. Dilengkapi dengan dudukan kayu berukir motif Megamendung, sangat anggun untuk pajangan meja kerja atau ruang tamu.',
+    spesifikasi: 'Bahan: Kayu Jati Solid Finishing Natural Wax | Panjang Bilah: 28 cm | Termasuk: Stand / Dudukan Kayu Ukir Eksklusif',
+    foto: [
+      'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=900&q=80'
+    ],
+    foto_utama_index: 0,
+    is_active: true
+  },
+  {
+    id: 'anyaman-mendong-tasik',
+    nama: 'Tas Jinjing Anyaman Mendong Khas Rajapolah',
+    kategori: 'Kerajinan & Kriya',
+    harga: 95000,
+    tipe_pesanan: 'ready',
+    estimasi_po: 'Ready Stock',
+    deskripsi: 'Tas kriya ramah lingkungan dari serat rumput mendong alami Tasikmalaya. Dianyam dengan ketelitian tangan para pengerajin Rajapolah dengan kombinasi tali kulit sintetis yang modis & kuat.',
+    spesifikasi: 'Bahan: 100% Rumput Mendong Kering Alami & Handle Faux Leather | Ukuran: 32 x 12 x 25 cm | Furing: Kain Blacu Dalaman dengan Resleting',
+    foto: [
+      'https://images.unsplash.com/photo-1590736969955-71cc94801759?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=900&q=80'
+    ],
+    foto_utama_index: 0,
+    is_active: true
+  },
+  {
+    id: 'buku-aksara-kaganga',
+    nama: 'Buku Pedoman Aksara Sunda Kaganga (Edisi Eksklusif)',
+    kategori: 'Buku & Naskah',
+    harga: 75000,
+    tipe_pesanan: 'po',
+    estimasi_po: '2-4 Hari Kerja',
+    deskripsi: 'Buku panduan komprehensif pembelajaran Aksara Sunda Baku karya pegiat budaya RIKSA. Membahas fonologi, aturan ngalagena, rarangken, angka, hingga contoh alih aksara prasasti & naskah kuno.',
+    spesifikasi: 'Penulis: Tim Riksa Budaya Sunda | Halaman: 168 Hal Bookpaper | Jilid: Hardcover Eksklusif Bertekstur Serat Bambu | ISBN: Resmi Terdaftar',
+    foto: [
+      'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=900&q=80'
+    ],
+    foto_utama_index: 0,
+    is_active: true
+  }
+];
+
+async function loadProdukFull() {
+  const tbl = document.getElementById('tbl-produk');
+  if (!tbl) return;
+  tbl.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:32px;color:var(--brown-mid);font-size:12px"><div style="font-size:24px;margin-bottom:8px">⏳</div>Memuat katalog produk budaya...</td></tr>';
+
+  if (window.riksaSupabase) {
+    try {
+      const { data, error } = await window.riksaSupabase
+        .from('riksa_documents')
+        .select('id, data')
+        .eq('collection', 'produk');
+
+      if (!error && data && data.length > 0) {
+        allProdukData = data.map(row => ({
+          id: row.id,
+          ...(row.data || {})
+        }));
+      } else {
+        allProdukData = [...DEFAULT_CULTURE_PRODUCTS];
+      }
+    } catch (e) {
+      console.warn('Supabase produk load fallback:', e);
+      allProdukData = [...DEFAULT_CULTURE_PRODUCTS];
+    }
+  } else {
+    allProdukData = [...DEFAULT_CULTURE_PRODUCTS];
+  }
+
+  updateProdukStats();
+  renderProdukTable(allProdukData);
+}
+
+function updateProdukStats() {
+  const total = allProdukData.length;
+  const ready = allProdukData.filter(p => p.tipe_pesanan === 'ready').length;
+  const po = allProdukData.filter(p => p.tipe_pesanan === 'po').length;
+
+  const elTotal = document.getElementById('prod-stat-total');
+  const elReady = document.getElementById('prod-stat-ready');
+  const elPo = document.getElementById('prod-stat-po');
+  const badge = document.getElementById('badge-produk');
+
+  if (elTotal) elTotal.textContent = total;
+  if (elReady) elReady.textContent = ready;
+  if (elPo) elPo.textContent = po;
+
+  if (badge) {
+    if (total > 0) {
+      badge.textContent = total;
+      badge.style.display = 'inline-block';
+    } else {
+      badge.style.display = 'none';
+    }
+  }
+}
+
+function renderProdukTable(data) {
+  const tbl = document.getElementById('tbl-produk');
+  if (!tbl) return;
+
+  if (!data || data.length === 0) {
+    tbl.innerHTML = `
+      <tr>
+        <td colspan="7" style="text-align:center;padding:40px;color:var(--brown-mid);font-size:13px">
+          <div style="font-size:32px;margin-bottom:8px">🛍️</div>
+          <div style="font-weight:700;margin-bottom:4px">Belum ada produk di etalase</div>
+          <p style="font-size:11px;color:var(--brown-mid);margin-bottom:12px">Tambahkan produk baru atau inisialisasi produk standar budaya Sunda.</p>
+          <button class="btn btn-primary btn-sm" onclick="openModalProduk()">➕ Tambah Produk Pertama</button>
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  const fmtRupiah = (val) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(val || 0);
+
+  tbl.innerHTML = data.map((prod) => {
+    const fotoArr = Array.isArray(prod.foto) && prod.foto.length > 0 ? prod.foto : ['https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?auto=format&fit=crop&w=400&q=80'];
+    const fotoIdx = (prod.foto_utama_index != null && prod.foto_utama_index >= 0 && prod.foto_utama_index < fotoArr.length) ? prod.foto_utama_index : 0;
+    const displayImg = fotoArr[fotoIdx] || fotoArr[0];
+    const isPo = prod.tipe_pesanan === 'po';
+
+    return `
+      <tr id="row-prod-${escHtml(prod.id)}">
+        <td>
+          <div style="position:relative;width:52px;height:52px;border-radius:10px;overflow:hidden;border:2px solid var(--beige);background:var(--cream);box-shadow:0 2px 6px rgba(0,0,0,0.06)">
+            <img src="${escHtml(displayImg)}" alt="${escHtml(prod.nama)}" style="width:100%;height:100%;object-fit:cover" onerror="this.src='/images/riksa-logo.png'" />
+            <div style="position:absolute;bottom:0;right:0;background:var(--gold);color:white;font-size:8px;font-weight:800;padding:1px 3px;border-radius:4px 0 0 0" title="Foto Display Utama">★</div>
+          </div>
+        </td>
+        <td>
+          <div style="font-weight:700;color:var(--brown);font-size:13px;line-height:1.2;margin-bottom:3px">${escHtml(prod.nama)}</div>
+          <div style="font-size:11px;color:var(--brown-mid);max-width:280px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${escHtml(prod.deskripsi || '-')}</div>
+        </td>
+        <td>
+          <span style="display:inline-block;padding:2px 8px;border-radius:99px;background:rgba(30,86,49,0.08);color:var(--primary);font-size:11px;font-weight:700">
+            ${escHtml(prod.kategori || 'Kerajinan & Kriya')}
+          </span>
+        </td>
+        <td>
+          <span style="font-weight:800;color:var(--accent-orange);font-size:13px">
+            ${fmtRupiah(prod.harga)}
+          </span>
+        </td>
+        <td>
+          ${isPo ? `
+            <span style="display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:99px;background:rgba(234,88,12,0.1);color:var(--accent-orange);font-size:11px;font-weight:800">
+              ⏳ PO (${escHtml(prod.estimasi_po || '3-5 Hari')})
+            </span>
+          ` : `
+            <span style="display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:99px;background:rgba(22,163,74,0.1);color:#16A34A;font-size:11px;font-weight:800">
+              ✓ Ready Stock
+            </span>
+          `}
+        </td>
+        <td>
+          <span style="display:inline-block;padding:2px 8px;border-radius:99px;background:var(--cream);border:1px solid var(--beige);font-size:11px;font-weight:600;color:var(--brown)">
+            📷 ${fotoArr.length} / 5 Foto
+          </span>
+        </td>
+        <td style="text-align:right;white-space:nowrap">
+          <button class="btn btn-secondary btn-sm" onclick="previewProdukWa('${escHtml(prod.id)}')" title="Cek pesan WA pemesanan" style="padding:4px 8px;margin-right:4px">💬 WA</button>
+          <button class="btn btn-secondary btn-sm" onclick="openModalProduk('${escHtml(prod.id)}')" title="Edit produk" style="padding:4px 8px;margin-right:4px">✏️</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteProduk('${escHtml(prod.id)}')" title="Hapus produk" style="padding:4px 8px">🗑️</button>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function filterProdukTable() {
+  const cat = document.getElementById('filter-prod-kategori')?.value || 'all';
+  const stat = document.getElementById('filter-prod-status')?.value || 'all';
+  const q = (document.getElementById('search-prod-input')?.value || '').toLowerCase().trim();
+
+  const filtered = allProdukData.filter(p => {
+    const matchCat = cat === 'all' || (p.kategori || '').toLowerCase().includes(cat.toLowerCase());
+    const matchStat = stat === 'all' || p.tipe_pesanan === stat;
+    const matchQ = !q || (p.nama || '').toLowerCase().includes(q) || (p.deskripsi || '').toLowerCase().includes(q);
+    return matchCat && matchStat && matchQ;
+  });
+
+  renderProdukTable(filtered);
+}
+
+function togglePoEstimate(tipe) {
+  const readyHint = document.getElementById('prod-ready-hint');
+  const poGroup = document.getElementById('group-prod-estimasi');
+  if (tipe === 'po') {
+    if (readyHint) readyHint.style.display = 'none';
+    if (poGroup) poGroup.style.display = 'flex';
+  } else {
+    if (readyHint) readyHint.style.display = 'flex';
+    if (poGroup) poGroup.style.display = 'none';
+  }
+}
+
+function openModalProduk(id = null) {
+  const titleEl = document.getElementById('modal-produk-title');
+  const idInp = document.getElementById('modal-prod-id');
+  const namaInp = document.getElementById('modal-prod-nama');
+  const katInp = document.getElementById('modal-prod-kategori');
+  const hargaInp = document.getElementById('modal-prod-harga');
+  const tipeInp = document.getElementById('modal-prod-tipe');
+  const estInp = document.getElementById('modal-prod-estimasi');
+  const spekInp = document.getElementById('modal-prod-spesifikasi');
+  const deskInp = document.getElementById('modal-prod-deskripsi');
+
+  if (id) {
+    const prod = allProdukData.find(p => p.id === id);
+    if (!prod) {
+      showToast('Produk tidak ditemukan!', 'error');
+      return;
+    }
+    if (titleEl) titleEl.textContent = 'Edit Produk Budaya Sunda';
+    if (idInp) idInp.value = prod.id;
+    if (namaInp) namaInp.value = prod.nama || '';
+    if (katInp) katInp.value = prod.kategori || 'Kerajinan & Kriya';
+    if (hargaInp) hargaInp.value = prod.harga || 0;
+    if (tipeInp) tipeInp.value = prod.tipe_pesanan || 'ready';
+    if (estInp) estInp.value = prod.estimasi_po || '3-5 Hari Kerja';
+    if (spekInp) spekInp.value = prod.spesifikasi || '';
+    if (deskInp) deskInp.value = prod.deskripsi || '';
+
+    togglePoEstimate(prod.tipe_pesanan || 'ready');
+
+    tempProdPhotos = Array.isArray(prod.foto) ? [...prod.foto] : [];
+    tempProdFotoUtamaIndex = (prod.foto_utama_index != null && prod.foto_utama_index >= 0 && prod.foto_utama_index < tempProdPhotos.length) ? prod.foto_utama_index : 0;
+  } else {
+    if (titleEl) titleEl.textContent = 'Tambah Produk Budaya Sunda';
+    if (idInp) idInp.value = '';
+    if (namaInp) namaInp.value = '';
+    if (katInp) katInp.value = 'Kerajinan & Kriya';
+    if (hargaInp) hargaInp.value = '';
+    if (tipeInp) tipeInp.value = 'ready';
+    if (estInp) estInp.value = '3-5 Hari Kerja';
+    if (spekInp) spekInp.value = '';
+    if (deskInp) deskInp.value = '';
+
+    togglePoEstimate('ready');
+
+    tempProdPhotos = [];
+    tempProdFotoUtamaIndex = 0;
+  }
+
+  renderModalProdPhotos();
+  openModal('modal-produk');
+}
+
+function renderModalProdPhotos() {
+  const counterEl = document.getElementById('modal-prod-photo-counter');
+  const gridEl = document.getElementById('modal-prod-photos-grid');
+  const footerInfo = document.getElementById('modal-prod-footer-info');
+  if (counterEl) counterEl.textContent = `${tempProdPhotos.length} / 5 Foto Terpasang`;
+  if (!gridEl) return;
+
+  if (tempProdFotoUtamaIndex >= tempProdPhotos.length) {
+    tempProdFotoUtamaIndex = 0;
+  }
+
+  if (footerInfo) {
+    if (tempProdPhotos.length > 0) {
+      footerInfo.innerHTML = `Terpasang <strong>${tempProdPhotos.length} dari 5 foto</strong>. Foto <strong>#${tempProdFotoUtamaIndex + 1}</strong> dipilih sebagai Foto Display Utama.`;
+    } else {
+      footerInfo.textContent = 'Maksimal 5 foto • Klik bintang ⭐ untuk menetapkan Foto Display Utama';
+    }
+  }
+
+  let html = '';
+
+  // 1. Render all uploaded photos
+  tempProdPhotos.forEach((url, idx) => {
+    const isMain = idx === tempProdFotoUtamaIndex;
+    html += `
+      <div style="position:relative;border-radius:12px;overflow:hidden;border:${isMain ? '2.5px solid var(--gold)' : '1px solid var(--beige)'};background:white;padding:6px;display:flex;flex-direction:column;gap:6px;box-shadow:${isMain ? '0 4px 14px rgba(201,151,46,0.28)' : '0 2px 6px rgba(0,0,0,0.04)'};transition:all .2s">
+        <div style="position:relative;width:100%;aspect-ratio:1;border-radius:8px;overflow:hidden;background:#F5F5F4">
+          <img src="${escHtml(url)}" alt="Foto #${idx+1}" style="width:100%;height:100%;object-fit:cover" onerror="this.src='/images/riksa-logo.png'" />
+          <span style="position:absolute;top:4px;left:4px;background:rgba(0,0,0,0.65);color:white;font-size:9px;font-weight:800;padding:2px 5px;border-radius:4px;backdrop-filter:blur(2px)">#${idx+1}</span>
+          ${isMain ? `<span style="position:absolute;bottom:4px;left:4px;right:4px;background:var(--gold);color:white;font-size:8px;font-weight:800;text-align:center;padding:2px;border-radius:4px;letter-spacing:0.02em;box-shadow:0 2px 6px rgba(0,0,0,0.2)">⭐ COVER DISPLAY</span>` : ''}
+        </div>
+        <div style="display:flex;gap:4px">
+          ${isMain ? `
+            <button type="button" style="flex:1;background:var(--gold);color:white;border:none;border-radius:6px;font-size:9px;font-weight:800;padding:5px 2px;cursor:default">⭐ Utama</button>
+          ` : `
+            <button type="button" onclick="setProdFotoUtama(${idx})" style="flex:1;background:var(--cream);color:var(--brown);border:1px solid var(--beige);border-radius:6px;font-size:9px;font-weight:700;padding:5px 2px;cursor:pointer;transition:background .15s" onmouseover="this.style.background='#FEF3C7'" onmouseout="this.style.background='var(--cream)'" title="Jadikan foto display depan">Pilih Utama</button>
+          `}
+          <button type="button" onclick="removeProdPhoto(${idx})" style="background:#FEE2E2;color:#DC2626;border:none;border-radius:6px;font-size:10px;padding:5px 7px;cursor:pointer;transition:background .15s" onmouseover="this.style.background='#FCA5A5'" onmouseout="this.style.background='#FEE2E2'" title="Hapus foto ini">🗑️</button>
+        </div>
+      </div>
+    `;
+  });
+
+  // 2. Render remaining empty slots up to 5
+  const remaining = 5 - tempProdPhotos.length;
+  for (let i = 0; i < remaining; i++) {
+    const slotNum = tempProdPhotos.length + i + 1;
+    html += `
+      <div onclick="document.getElementById('modal-prod-file-inp').click()" style="aspect-ratio:1;border:1.5px dashed #D6D3D1;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;background:rgba(255,255,255,0.7);transition:all .18s;padding:8px" onmouseover="this.style.borderColor='var(--primary)';this.style.background='#F0FDF4'" onmouseout="this.style.borderColor='#D6D3D1';this.style.background='rgba(255,255,255,0.7)'" title="Klik untuk upload foto ke slot #${slotNum}">
+        <span style="font-size:20px;color:#A8A29E;line-height:1">+</span>
+        <span style="font-size:10px;color:#78716C;font-weight:700">Slot #${slotNum}</span>
+        <span style="font-size:8.5px;color:#A8A29E">Pilih Foto</span>
+      </div>
+    `;
+  }
+
+  gridEl.innerHTML = html;
+}
+
+function setProdFotoUtama(idx) {
+  tempProdFotoUtamaIndex = idx;
+  renderModalProdPhotos();
+  showToast(`Foto #${idx + 1} dipilih sebagai Foto Display Utama!`, 'success');
+}
+
+function removeProdPhoto(idx) {
+  tempProdPhotos.splice(idx, 1);
+  if (tempProdFotoUtamaIndex >= tempProdPhotos.length) {
+    tempProdFotoUtamaIndex = Math.max(0, tempProdPhotos.length - 1);
+  }
+  renderModalProdPhotos();
+}
+
+function addProdPhotoFromUrl() {
+  if (tempProdPhotos.length >= 5) {
+    showToast('Maksimal 5 foto per produk!', 'error');
+    return;
+  }
+  const inp = document.getElementById('modal-prod-url-inp');
+  const val = inp?.value?.trim();
+  if (!val) {
+    showToast('Masukkan URL foto terlebih dahulu!', 'error');
+    return;
+  }
+  tempProdPhotos.push(val);
+  if (inp) inp.value = '';
+  renderModalProdPhotos();
+  showToast(`Foto ditambahkan (${tempProdPhotos.length}/5)`, 'success');
+}
+
+async function handleProdPhotoUpload(files) {
+  if (!files || !files.length) return;
+  const remaining = 5 - tempProdPhotos.length;
+  if (remaining <= 0) {
+    showToast('Maksimal 5 foto per produk!', 'error');
+    return;
+  }
+
+  const toProcess = Array.from(files).slice(0, remaining);
+  for (const file of toProcess) {
+    try {
+      const dataUrl = await compressImageToDataUrl(file, 900, 0.82);
+      tempProdPhotos.push(dataUrl);
+    } catch (err) {
+      console.warn('Gagal memproses gambar:', err);
+    }
+  }
+
+  renderModalProdPhotos();
+  showToast(`${toProcess.length} foto berhasil diunggah! (${tempProdPhotos.length}/5)`, 'success');
+  const fileInp = document.getElementById('modal-prod-file-inp');
+  if (fileInp) fileInp.value = '';
+}
+
+function compressImageToDataUrl(file, maxDimension = 900, quality = 0.82) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        let width = img.width;
+        let height = img.height;
+        if (width > height) {
+          if (width > maxDimension) {
+            height = Math.round((height * maxDimension) / width);
+            width = maxDimension;
+          }
+        } else {
+          if (height > maxDimension) {
+            width = Math.round((width * maxDimension) / height);
+            height = maxDimension;
+          }
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        resolve(canvas.toDataURL('image/jpeg', quality));
+      };
+      img.onerror = reject;
+      img.src = e.target.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+async function saveProdukModal() {
+  const idInp = document.getElementById('modal-prod-id');
+  const nama = document.getElementById('modal-prod-nama')?.value?.trim();
+  const kategori = document.getElementById('modal-prod-kategori')?.value || 'Kerajinan & Kriya';
+  const harga = Number(document.getElementById('modal-prod-harga')?.value);
+  const tipe_pesanan = document.getElementById('modal-prod-tipe')?.value || 'ready';
+  const estimasi_po = document.getElementById('modal-prod-estimasi')?.value?.trim() || (tipe_pesanan === 'po' ? '3-5 Hari Kerja' : 'Ready Stock');
+  const spesifikasi = document.getElementById('modal-prod-spesifikasi')?.value?.trim() || '';
+  const deskripsi = document.getElementById('modal-prod-deskripsi')?.value?.trim() || '';
+
+  if (!nama) {
+    showToast('Nama produk tidak boleh kosong!', 'error');
+    return;
+  }
+  if (!harga || harga <= 0) {
+    showToast('Harga produk harus lebih dari 0!', 'error');
+    return;
+  }
+  if (!tempProdPhotos.length) {
+    showToast('Minimal masukkan 1 foto produk!', 'error');
+    return;
+  }
+
+  const existingId = idInp?.value;
+  const prodId = existingId ? existingId : 'prod_' + Date.now();
+
+  const payloadData = {
+    nama,
+    kategori,
+    harga,
+    tipe_pesanan,
+    estimasi_po,
+    spesifikasi,
+    deskripsi,
+    foto: tempProdPhotos,
+    foto_utama_index: tempProdFotoUtamaIndex,
+    is_active: true,
+    updated_at: new Date().toISOString()
+  };
+
+  if (!existingId) {
+    payloadData.created_at = new Date().toISOString();
+  }
+
+  if (window.riksaSupabase) {
+    try {
+      const { error } = await window.riksaSupabase
+        .from('riksa_documents')
+        .upsert({
+          collection: 'produk',
+          id: prodId,
+          data: payloadData,
+          updated_at: new Date().toISOString()
+        });
+
+      if (error) throw error;
+    } catch (e) {
+      showToast('Gagal simpan ke Supabase: ' + e.message, 'error');
+      return;
+    }
+  }
+
+  const idx = allProdukData.findIndex(p => p.id === prodId);
+  if (idx >= 0) {
+    allProdukData[idx] = { id: prodId, ...payloadData };
+  } else {
+    allProdukData.unshift({ id: prodId, ...payloadData });
+  }
+
+  closeModal('modal-produk');
+  updateProdukStats();
+  renderProdukTable(allProdukData);
+  showToast(`Produk "${nama}" berhasil disimpan!`, 'success');
+  logActivity(`Produk disimpan: ${nama}`);
+}
+
+async function deleteProduk(id) {
+  const prod = allProdukData.find(p => p.id === id);
+  const name = prod ? prod.nama : 'Produk';
+  if (!confirm(`Yakin ingin menghapus produk "${name}" dari etalase?`)) return;
+
+  if (window.riksaSupabase) {
+    try {
+      const { error } = await window.riksaSupabase
+        .from('riksa_documents')
+        .delete()
+        .eq('collection', 'produk')
+        .eq('id', id);
+
+      if (error) throw error;
+    } catch (e) {
+      showToast('Gagal hapus dari Supabase: ' + e.message, 'error');
+      return;
+    }
+  }
+
+  allProdukData = allProdukData.filter(p => p.id !== id);
+  updateProdukStats();
+  renderProdukTable(allProdukData);
+  showToast(`Produk "${name}" berhasil dihapus.`, 'success');
+  logActivity(`Produk dihapus: ${name}`);
+}
+
+function previewProdukWa(id) {
+  const prod = allProdukData.find(p => p.id === id);
+  if (!prod) return;
+
+  const fmtRupiah = (val) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(val || 0);
+  const statusText = prod.tipe_pesanan === 'po' ? `Pre-Order / PO (${prod.estimasi_po || '3-5 Hari Kerja'})` : 'Ready Stock';
+
+  const waText = 
+`Sampurasun Admin RIKSA 🙏
+Saya tertarik dan ingin memesan produk budaya Sunda dari website RIKSA:
+
+📦 *RINCIAN PESANAN:*
+• *Produk:* ${prod.nama}
+• *Kategori:* ${prod.kategori}
+• *Status:* ${statusText}
+• *Harga Satuan:* ${fmtRupiah(prod.harga)}
+• *Jumlah Pesanan:* 1 pcs
+• *Total Estimasi:* ${fmtRupiah(prod.harga)}
+
+📝 *Catatan Pemesan:*
+-
+
+🔗 *Tautan Produk:*
+${window.location.origin}/#products
+
+Mohon informasi ketersediaan stok & petunjuk proses pembayarannya. Hatur nuhun!`;
+
+  const waUrl = `https://wa.me/6285624607400?text=${encodeURIComponent(waText)}`;
+  window.open(waUrl, '_blank');
+}
+
+async function seedDefaultProdukToSupabase() {
+  if (!confirm('Inisialisasi 6 produk budaya khas Sunda standar ke database Supabase?')) return;
+  if (!window.riksaSupabase) {
+    showToast('Supabase belum terhubung!', 'error');
+    return;
+  }
+
+  try {
+    for (const p of DEFAULT_CULTURE_PRODUCTS) {
+      await window.riksaSupabase
+        .from('riksa_documents')
+        .upsert({
+          collection: 'produk',
+          id: p.id,
+          data: {
+            ...p,
+            updated_at: new Date().toISOString()
+          },
+          updated_at: new Date().toISOString()
+        });
+    }
+
+    showToast('6 Produk budaya Sunda berhasil disimpan ke database!', 'success');
+    await loadProdukFull();
+  } catch (err) {
+    showToast('Gagal inisialisasi: ' + err.message, 'error');
+  }
+}
+
 // ─── TAG INPUT ───────────────────────────────────────────
 function handleTagInput(e) {
   if (e.key === 'Enter' || e.key === ',') {
@@ -3266,48 +4234,226 @@ async function loadDashboardStats() {
   const db = window.riksaDB; if (!db) return;
   try {
     const { collection, getDocs } = await getFS();
-    const [relSnap, beritaSnap, galeriSnap, pendSnap] = await Promise.all([
+    const [relSnap, beritaSnap, galeriSnap, pendSnap, prodSnap] = await Promise.all([
       getDocs(collection(db,'relawan')),
       getDocs(collection(db,'berita')),
       getDocs(collection(db,'galeri')),
       getDocs(collection(db,'pendaftar_relawan')),
+      getDocs(collection(db,'produk')).catch(()=>({docs:[]})),
     ]);
     const relawan = relSnap.docs.map(d=>d.data());
     const berita = beritaSnap.docs.map(d=>d.data());
     const galeri = galeriSnap.docs.map(d=>d.data());
     const pendaftar = pendSnap.docs.map(d=>d.data());
+    const produk = (prodSnap?.docs || []).map(d=>({ id: d.id, ...d.data() }));
+    
+    // Set real database counts
     setElText('stat-relawan', relawan.filter(r=>r.status_aktif).length);
     setElText('stat-berita', berita.filter(b=>b.status==='published').length);
     setElText('stat-galeri', galeri.length);
     setElText('stat-pendaftar', pendaftar.length);
     setElText('stat-pending', pendaftar.filter(p=>p.status==='pending').length);
+    
     const badge = document.getElementById('badge-pendaftar');
     const pCount = pendaftar.filter(p=>p.status==='pending').length;
     if (badge) { badge.textContent=pCount; badge.style.display=pCount?'':'none'; }
+
+    const prodTotal = produk.length || DEFAULT_CULTURE_PRODUCTS.length;
+    setElText('stat-produk-home', prodTotal);
+
+    const badgeProd = document.getElementById('badge-produk');
+    if (badgeProd) { 
+      badgeProd.textContent = prodTotal; 
+      badgeProd.style.display = prodTotal ? '' : 'none'; 
+    }
+    
+    // Render 100% REAL distribution from database
     renderDivisiChart(relawan);
+
+    // Render 100% REAL recent activities from database
+    renderRecentActivities({ pendaftar, berita, galeri, relawan });
   } catch(e) { console.error('loadDashboardStats', e); }
+}
+
+function timeAgo(dateInput) {
+  if (!dateInput) return 'Baru saja';
+  const d = new Date(dateInput);
+  if (isNaN(d.getTime())) return 'Baru saja';
+  const diffSec = Math.floor((Date.now() - d.getTime()) / 1000);
+  if (diffSec < 60) return 'Baru saja';
+  const diffMin = Math.floor(diffSec / 60);
+  if (diffMin < 60) return diffMin + ' menit yang lalu';
+  const diffHours = Math.floor(diffMin / 60);
+  if (diffHours < 24) return diffHours + ' jam yang lalu';
+  const diffDays = Math.floor(diffHours / 24);
+  if (diffDays < 30) return diffDays + ' hari yang lalu';
+  return d.toLocaleDateString('id-ID', { day: 'numeric', month: 'short' });
+}
+
+function renderRecentActivities({ pendaftar = [], berita = [], galeri = [], relawan = [] }) {
+  const container = document.getElementById('activity-timeline');
+  if (!container) return;
+
+  const events = [];
+
+  // 1. Pendaftar
+  pendaftar.forEach(p => {
+    events.push({
+      type: 'pendaftar',
+      title: 'Pengajuan relawan baru dari ' + (p.nama_lengkap || 'Pendaftar'),
+      date: p.tanggal_daftar || p.created_at,
+      iconColor: '#16A34A',
+      iconSvg: '<path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4 12.5-12.5z"/>'
+    });
+  });
+
+  // 2. Galeri
+  galeri.forEach(g => {
+    events.push({
+      type: 'galeri',
+      title: 'Galeri baru ditambahkan: ' + (g.judul || 'Foto Kegiatan'),
+      date: g.created_at,
+      iconColor: '#F97316',
+      iconSvg: '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/>'
+    });
+  });
+
+  // 3. Berita
+  berita.forEach(b => {
+    events.push({
+      type: 'berita',
+      title: 'Berita dipublikasikan: ' + (b.judul || 'Kabar RIKSA'),
+      date: b.created_at || b.tanggal,
+      iconColor: '#1E5631',
+      iconSvg: '<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/>'
+    });
+  });
+
+  // 4. Relawan
+  relawan.forEach(r => {
+    events.push({
+      type: 'relawan',
+      title: 'Relawan aktif: ' + (r.nama || 'Anggota') + ' (' + (r.divisi || 'Umum') + ')',
+      date: r.created_at || r.tanggal_bergabung,
+      iconColor: '#2563EB',
+      iconSvg: '<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/>'
+    });
+  });
+
+  events.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
+
+  if (events.length === 0) {
+    container.innerHTML = '<div style="text-align:center;padding:28px 12px;color:#78716C;font-size:12px;line-height:1.6">' +
+      '<div style="font-size:24px;margin-bottom:6px;opacity:0.5">🕐</div>' +
+      '<div style="font-weight:700;color:#292524;margin-bottom:3px;font-size:13px">Belum Ada Aktivitas Terbaru</div>' +
+      '<div style="color:#A8A29E">Aktivitas pendaftaran relawan, publikasi berita, dan galeri akan muncul di sini secara otomatis.</div>' +
+    '</div>';
+    return;
+  }
+
+  const topEvents = events.slice(0, 4);
+  let contentHtml = '<div style="position:absolute;left:27px;top:16px;bottom:16px;width:2px;background:#E5E7EB;z-index:0"></div>';
+
+  topEvents.forEach(ev => {
+    contentHtml += '<div style="display:flex;align-items:center;justify-content:space-between;position:relative;z-index:1;gap:14px">' +
+      '<div style="display:flex;align-items:center;gap:12px;min-width:0">' +
+        '<div style="width:32px;height:32px;border-radius:50%;background:' + ev.iconColor + ';color:white;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 3px white;flex-shrink:0">' +
+          '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">' + ev.iconSvg + '</svg>' +
+        '</div>' +
+        '<div style="font-size:13px;font-weight:600;color:#292524;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + ev.title + '</div>' +
+      '</div>' +
+      '<div style="font-size:11px;color:#A8A29E;white-space:nowrap;flex-shrink:0">' + timeAgo(ev.date) + '</div>' +
+    '</div>';
+  });
+
+  container.innerHTML = contentHtml;
 }
 
 function renderDivisiChart(relawan) {
   const counts = {};
-  relawan.forEach(r => { counts[r.divisi] = (counts[r.divisi]||0)+1; });
-  const total = relawan.length || 1;
-  const chart = document.getElementById('chart-divisi');
-  if (!chart) return;
-  if (!Object.keys(counts).length) {
-    chart.innerHTML = '<div style="text-align:center;padding:20px 0;color:var(--brown-mid);font-size:12px;opacity:.5">Belum ada data relawan.</div>';
+  if (Array.isArray(relawan) && relawan.length > 0) {
+    relawan.forEach(r => { 
+      const div = r.divisi || 'Umum';
+      counts[div] = (counts[div] || 0) + 1; 
+    });
+  }
+
+  // 100% REAL TOTAL FROM DATABASE
+  const total = Array.isArray(relawan) ? relawan.length : 0;
+  
+  const centerEl = document.getElementById('donut-center-total');
+  if (centerEl) centerEl.textContent = total;
+
+  const colorPalette = ['#16A34A', '#F97316', '#3B82F6', '#8B5CF6', '#EAB308', '#06B6D4', '#EC4899'];
+  const svg = document.getElementById('svg-donut-chart');
+  const legend = document.getElementById('donut-legend-items');
+
+  if (!svg || !legend) return;
+
+  svg.innerHTML = '';
+  legend.innerHTML = '';
+
+  // If 0 relawan in database:
+  if (total === 0) {
+    const emptyCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    emptyCircle.setAttribute('cx', '85');
+    emptyCircle.setAttribute('cy', '85');
+    emptyCircle.setAttribute('r', '60');
+    emptyCircle.setAttribute('fill', 'none');
+    emptyCircle.setAttribute('stroke', '#E5E7EB');
+    emptyCircle.setAttribute('stroke-width', '20');
+    svg.appendChild(emptyCircle);
+
+    legend.innerHTML = '<div style="text-align:center;padding:12px 6px;color:#78716C;font-size:12px;line-height:1.5">' +
+      '<div style="font-weight:700;color:#292524;margin-bottom:4px;font-size:13px">Belum Ada Data Relawan</div>' +
+      '<div style="color:#A8A29E;margin-bottom:10px">Distribusi divisi akan muncul otomatis secara real-time setelah relawan didaftarkan.</div>' +
+      '<button onclick="showPanel(\'relawan\', document.querySelector(\'[onclick*=\\\'relawan\\\']\'))" style="background:#ECFDF5;color:#1E5631;border:1px solid #A7F3D0;border-radius:99px;padding:5px 14px;font-size:11px;font-weight:700;cursor:pointer;transition:all .15s" onmouseover="this.style.background=\'#D1FAE5\'" onmouseout="this.style.background=\'#ECFDF5\'">' +
+        '+ Tambah Relawan' +
+      '</button>' +
+    '</div>';
     return;
   }
-  chart.innerHTML = Object.entries(counts).sort((a,b)=>b[1]-a[1]).map(([div,cnt]) => `
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-      <div style="width:120px;font-size:11px;font-weight:700;color:var(--brown-mid)">${div}</div>
-      <div style="flex:1;height:8px;background:var(--cream);border-radius:99px;overflow:hidden">
-        <div style="width:${Math.round(cnt/total*100)}%;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--primary),var(--gold))"></div>
-      </div>
-      <div style="font-size:11px;font-weight:700;color:var(--brown);width:28px;text-align:right">${cnt}</div>
-    </div>
-  `).join('');
+
+  // Real calculations
+  const radius = 60;
+  const circumference = 2 * Math.PI * radius; // ~376.99
+  let accumulatedOffset = 0;
+
+  const entries = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+  entries.forEach(([div, count], idx) => {
+    const pct = Math.round((count / total) * 100);
+    const strokeDash = (count / total) * circumference;
+    const strokeGap = circumference - strokeDash;
+    const color = colorPalette[idx % colorPalette.length];
+
+    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    circle.setAttribute('cx', '85');
+    circle.setAttribute('cy', '85');
+    circle.setAttribute('r', radius);
+    circle.setAttribute('fill', 'none');
+    circle.setAttribute('stroke', color);
+    circle.setAttribute('stroke-width', '22');
+    circle.setAttribute('stroke-dasharray', strokeDash + ' ' + strokeGap);
+    circle.setAttribute('stroke-dashoffset', -accumulatedOffset);
+    circle.style.transition = 'stroke-dasharray 0.5s ease';
+    svg.appendChild(circle);
+
+    accumulatedOffset += strokeDash;
+
+    const legendItem = document.createElement('div');
+    legendItem.style.cssText = 'display:flex;align-items:center;justify-content:space-between;font-size:13px;padding:3px 0';
+    legendItem.innerHTML = '<div style="display:flex;align-items:center;gap:8px">' +
+      '<span style="width:10px;height:10px;border-radius:50%;background:' + color + ';display:inline-block"></span>' +
+      '<span style="font-weight:600;color:#292524">' + div + '</span>' +
+      '<span style="font-size:11px;color:#A8A29E">(' + count + ')</span>' +
+    '</div>' +
+    '<span style="font-weight:800;color:#1C1917">' + pct + '%</span>';
+    legend.appendChild(legendItem);
+  });
 }
+
+// Initial render with real data (starts at 0)
+setTimeout(() => { renderDivisiChart([]); renderRecentActivities({}); }, 50);
 
 // ─── TRIGGER STATS LOAD WHEN DB IS READY ─────────────
 document.addEventListener('riksa-db-ready', (e) => {

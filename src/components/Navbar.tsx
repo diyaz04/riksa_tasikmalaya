@@ -1,109 +1,229 @@
 import { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { 
+  Home, 
+  Feather, 
+  Calendar, 
+  Image as ImageIcon, 
+  User, 
+  Users, 
+  Menu, 
+  X,
+  Type,
+  ShoppingBag
+} from 'lucide-react';
 import LogoFrame from './Shared/LogoFrame';
 
-export default function Navbar() {
+interface NavbarProps {
+  onOpenJoinModal?: () => void;
+  activeSection?: string;
+  isMobileDrawerOpen?: boolean;
+  setIsMobileDrawerOpen?: (open: boolean) => void;
+}
+
+export default function Navbar({ 
+  onOpenJoinModal, 
+  activeSection = 'tentang',
+  isMobileDrawerOpen = false,
+  setIsMobileDrawerOpen 
+}: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [internalDrawerOpen, setInternalDrawerOpen] = useState(false);
+
+  const drawerOpen = setIsMobileDrawerOpen ? isMobileDrawerOpen : internalDrawerOpen;
+  const setDrawer = setIsMobileDrawerOpen || setInternalDrawerOpen;
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const navLinks = [
-    { name: 'Tentang Riksa', href: '#about' },
-    { name: 'Filosofi', href: '#philosophy' },
-    { name: 'Agenda', href: '#program' },
-    { name: 'Galeri', href: '#gallery' },
-    { name: 'Alih Aksara', href: '#converter' },
+    { name: 'Tentang Riksa', href: '#about', id: 'tentang' },
+    { name: 'Filosofi', href: '#philosophy', id: 'filosofi', icon: Feather },
+    { name: 'Agenda', href: '#program', id: 'agenda', icon: Calendar },
+    { name: 'Galeri', href: '#gallery', id: 'galeri', icon: ImageIcon },
+    { name: 'Katalog Budaya', href: '#products', id: 'products', icon: ShoppingBag },
+    { name: 'Alih Aksara', href: '#converter', id: 'converter' },
   ];
 
   return (
-    <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-      isScrolled
-        ? 'bg-white/18 backdrop-blur-2xl shadow-[0_18px_55px_rgba(61,32,19,0.16)] border-b border-white/30 py-2.5 sm:py-3'
-        : 'bg-transparent py-3 sm:py-5'
-    }`}>
-      <div className="container mx-auto px-4 sm:px-6 flex justify-between items-center">
-        {/* Logo */}
-        <a href="#" aria-label="RIKSA Beranda" className="transition-transform duration-300 hover:-translate-y-0.5">
-          <LogoFrame
-            variant="nav"
-            className={isScrolled ? 'shadow-riksa-gold/20' : 'shadow-riksa-brown-dark/15'}
-          />
+    <>
+      {/* ============================================================== */}
+      {/* 1. DESKTOP SYSTEM NAVBAR (ALWAYS VISIBLE & FLOATING)           */}
+      {/* Sits right on top of the blurred navbar region in the hero     */}
+      {/* ============================================================== */}
+      <header className="hidden lg:block fixed top-3 sm:top-4 inset-x-0 z-50 px-4 pointer-events-none transition-all duration-300">
+        <div className="max-w-[960px] xl:max-w-5xl mx-auto pointer-events-auto">
+          <nav 
+            className={`w-full bg-white rounded-full px-5 py-2.5 flex items-center justify-between border transition-all duration-300 ${
+              isScrolled 
+                ? 'shadow-[0_12px_40px_rgba(20,61,34,0.14)] border-emerald-950/15 py-2.5' 
+                : 'shadow-[0_8px_30px_rgba(0,0,0,0.08)] border-stone-200/80 py-2.5'
+            }`}
+          >
+            {/* Logo on Left */}
+            <a 
+              href="#" 
+              className="flex items-center gap-2 group transition-transform duration-200 hover:scale-[1.02]"
+              aria-label="Beranda RIKSA"
+            >
+              <LogoFrame variant="nav" />
+            </a>
+
+            {/* Desktop Center Navigation */}
+            <div className="flex items-center gap-5 xl:gap-7 text-sm font-medium">
+              <a 
+                href="#" 
+                aria-label="Beranda"
+                className="text-riksa-green hover:text-riksa-green-dark p-1.5 rounded-full transition-colors"
+              >
+                <Home size={18} className="stroke-[2.2]" />
+              </a>
+
+              {navLinks.map((link) => {
+                const IconComp = link.icon;
+                const isActive = activeSection === link.id;
+
+                return (
+                  <a
+                    key={link.name}
+                    href={link.href}
+                    className={`relative flex items-center gap-1.5 transition-colors py-1 group ${
+                      isActive 
+                        ? 'text-riksa-green font-bold' 
+                        : 'text-stone-700 hover:text-riksa-green font-medium'
+                    }`}
+                  >
+                    {IconComp && <IconComp size={15} className="opacity-80 group-hover:opacity-100 transition-opacity" />}
+                    <span>{link.name}</span>
+
+                    {/* Active Solid Green Underline Bar matching Mockup */}
+                    {isActive && (
+                      <span className="absolute -bottom-1 inset-x-0 h-[2.5px] bg-riksa-green rounded-full" />
+                    )}
+                  </a>
+                );
+              })}
+
+              <span className="h-4 w-px bg-stone-300/80 mx-1" aria-hidden="true" />
+
+              <a 
+                href="/admin/index.html"
+                className="flex items-center gap-1.5 text-stone-700 hover:text-riksa-green transition-colors font-medium"
+              >
+                <User size={16} className="opacity-80" />
+                <span>Login</span>
+              </a>
+            </div>
+
+            {/* Right Action: Gabung Button (Real Interactive System Button) */}
+            <button
+              type="button"
+              onClick={onOpenJoinModal}
+              className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-riksa-green hover:bg-riksa-green-dark text-white text-xs sm:text-sm font-bold tracking-wide shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0"
+            >
+              <Users size={16} />
+              <span>Gabung</span>
+            </button>
+          </nav>
+        </div>
+      </header>
+
+      {/* ============================================================== */}
+      {/* 2. MOBILE FLOATING ACTION NAVBAR (Appears Past Hero on Scroll)  */}
+      {/* ============================================================== */}
+      <div 
+        className={`lg:hidden fixed top-2.5 inset-x-3 z-50 flex items-center justify-between pointer-events-none transition-all duration-300 ${
+          isScrolled ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-3'
+        }`}
+      >
+        <a 
+          href="#"
+          className="bg-white/95 backdrop-blur-md px-3.5 py-1.5 rounded-full shadow-lg border border-stone-200/80 flex items-center pointer-events-auto active:scale-95 transition-transform"
+        >
+          <LogoFrame variant="nav" imageClassName="h-7 w-auto" />
         </a>
 
-        {/* Desktop Menu */}
-        <div className="hidden lg:flex items-center gap-6 xl:gap-8">
-          {navLinks.map((link) => (
-            <a 
-              key={link.name} 
-              href={link.href}
-            className="font-sans font-bold text-sm tracking-wide uppercase text-riksa-brown-dark/85 transition-colors hover:text-riksa-orange drop-shadow-[0_1px_10px_rgba(245,233,211,0.75)]"
-            >
-              {link.name}
-            </a>
-          ))}
-          <div className="flex items-center gap-4">
-            <a 
-              href="/admin/index.html" 
-              className="font-sans font-bold text-sm tracking-wide uppercase text-riksa-brown-dark transition-colors hover:text-riksa-orange drop-shadow-[0_1px_10px_rgba(245,233,211,0.75)]"
-            >
-              Login
-            </a>
-            <a 
-              href="#program" 
-              className="bg-riksa-orange text-white px-6 py-2 rounded-full font-bold font-sans hover:bg-riksa-orange-light transition-colors"
-            >
-              Gabung
-            </a>
-          </div>
-        </div>
-
-        {/* Mobile Menu Toggle */}
         <button
-          className="lg:hidden text-riksa-brown-dark drop-shadow-[0_1px_10px_rgba(245,233,211,0.75)]"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label={mobileMenuOpen ? 'Tutup menu' : 'Buka menu'}
-          aria-expanded={mobileMenuOpen}
+          type="button"
+          onClick={() => setDrawer(!drawerOpen)}
+          aria-label={drawerOpen ? 'Tutup navigasi' : 'Buka navigasi'}
+          className="w-11 h-11 rounded-full bg-riksa-green text-white flex items-center justify-center shadow-lg pointer-events-auto active:scale-90 transition-transform"
         >
-          {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+          {drawerOpen ? <X size={22} className="stroke-[2.5]" /> : <Menu size={22} className="stroke-[2.5]" />}
         </button>
       </div>
 
-      {/* Mobile Menu Dropdown */}
-      <div className={`lg:hidden absolute top-full left-0 w-full bg-riksa-brown-dark/92 backdrop-blur-xl shadow-2xl transition-all duration-300 overflow-hidden ${mobileMenuOpen ? 'max-h-[calc(100svh-72px)] border-b-4 border-riksa-orange' : 'max-h-0'}`}>
-        <div className="flex flex-col p-4 sm:p-6 gap-3 overflow-y-auto">
-          {navLinks.map((link) => (
-            <a 
-              key={link.name} 
-              href={link.href}
-              onClick={() => setMobileMenuOpen(false)}
-              className="font-sans font-bold text-riksa-cream text-base sm:text-lg uppercase tracking-wider py-2 border-b border-riksa-cream/10 hover:text-riksa-orange transition-colors"
+      {/* ============================================================== */}
+      {/* 3. MOBILE MENU DRAWER POPUP                                    */}
+      {/* ============================================================== */}
+      {drawerOpen && (
+        <div className="lg:hidden fixed inset-x-3 top-16 z-50 max-w-lg mx-auto bg-white/98 backdrop-blur-xl rounded-3xl p-5 shadow-2xl border border-emerald-950/15 animate-fade-in pointer-events-auto">
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center justify-between pb-2 border-b border-stone-200">
+              <span className="text-xs font-bold uppercase tracking-wider text-riksa-green">Menu Navigasi RIKSA</span>
+              <button 
+                type="button" 
+                onClick={() => setDrawer(false)}
+                className="p-1 rounded-full hover:bg-stone-100 text-stone-500"
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            <a
+              href="#"
+              onClick={() => setDrawer(false)}
+              className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-riksa-green font-bold bg-emerald-50"
             >
-              {link.name}
+              <Home size={18} />
+              <span>Beranda Utama</span>
             </a>
-          ))}
-          <div className="flex flex-col gap-3 mt-2 pt-4 border-t border-riksa-cream/20">
-            <a 
-              href="/admin/index.html" 
-              className="font-sans font-bold text-riksa-cream text-base sm:text-lg uppercase tracking-wider text-center py-3 border border-riksa-cream/30 rounded-xl hover:bg-riksa-cream/10 transition-colors"
-            >
-              Login Admin
-            </a>
-            <a 
-              href="#program" 
-              className="bg-riksa-orange text-white font-sans font-bold text-base sm:text-lg uppercase tracking-wider text-center py-3 rounded-xl hover:bg-riksa-orange-light transition-colors"
-            >
-              Gabung Sekarang
-            </a>
+
+            {navLinks.map((link) => {
+              const IconComp = link.icon;
+              return (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  onClick={() => setDrawer(false)}
+                  className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-stone-700 hover:text-riksa-green hover:bg-emerald-50/60 font-medium transition-colors"
+                >
+                  {IconComp ? <IconComp size={18} /> : <Type size={18} />}
+                  <span>{link.name}</span>
+                </a>
+              );
+            })}
+
+            <hr className="my-1.5 border-stone-200" />
+
+            <div className="flex flex-col gap-2 pt-1">
+              <a
+                href="/admin/index.html"
+                className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-stone-200 text-stone-700 font-semibold hover:border-riksa-green hover:text-riksa-green transition-colors"
+              >
+                <User size={18} />
+                <span>Login Admin</span>
+              </a>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setDrawer(false);
+                  onOpenJoinModal?.();
+                }}
+                className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-riksa-green text-white font-bold shadow-md hover:bg-riksa-green-dark transition-colors"
+              >
+                <Users size={18} />
+                <span>Gabung Komunitas</span>
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-    </nav>
+      )}
+    </>
   );
 }

@@ -98,6 +98,7 @@ using (
   or (collection = 'galeri' and coalesce((data ->> 'isVisible')::boolean, false) = true)
   or (collection = 'struktur')
   or (collection = 'relawan' and coalesce((data ->> 'status_aktif')::boolean, false) = true)
+  or (collection = 'produk' and coalesce((data ->> 'is_active')::boolean, true) = true)
 );
 
 drop policy if exists "Public submit volunteer applications" on public.riksa_documents;

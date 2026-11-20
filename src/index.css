@@ -1,21 +1,37 @@
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Noto+Sans+Sundanese&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Noto+Sans+Sundanese&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 @import "tailwindcss";
 
 @theme {
   --font-sans: 'Plus Jakarta Sans', sans-serif;
-  --font-serif: 'Fraunces', serif;
+  --font-serif: 'Fraunces', 'Playfair Display', serif;
   --font-script: 'Caveat', cursive;
   --font-aksara: 'Noto Sans Sundanese', serif;
 
-  --color-riksa-orange: #D2691E;
-  --color-riksa-orange-light: #E8944A;
-  --color-riksa-brown-dark: #3D2013;
-  --color-riksa-cream: #F5E9D3;
-  --color-riksa-gold: #C9A15C;
+  /* RIKSA Parahyangan & Tatar Sukapura Color System */
+  --color-riksa-green: #1E5631;
+  --color-riksa-green-dark: #143D22;
+  --color-riksa-green-deep: #0E2917;
+  --color-riksa-green-light: #297744;
+  --color-riksa-green-subtle: #EDF6EE;
+  --color-riksa-green-border: #C8DEC3;
+
+  --color-riksa-orange: #D4621A;
+  --color-riksa-orange-light: #E87935;
+  --color-riksa-orange-subtle: #FDF3EB;
+
+  --color-riksa-gold: #C9972E;
+  --color-riksa-gold-light: #DFB255;
+  --color-riksa-gold-subtle: #FDF8ED;
+
+  --color-riksa-cream: #FAF7EE;
+  --color-riksa-cream-soft: #F4EFE0;
   --color-riksa-white: #FFFFFF;
-  
+  --color-riksa-brown-dark: #1F2421;
+  --color-riksa-stone: #4B5548;
+
   --animate-fade-in: fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
   --animate-slide-up: slide-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-bounce-subtle: bounce-subtle 2s infinite;
 }
 
 @keyframes fade-in {
@@ -28,9 +44,14 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes bounce-subtle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+
 :root {
   --font-sans: 'Plus Jakarta Sans', sans-serif;
-  --font-serif: 'Fraunces', serif;
+  --font-serif: 'Fraunces', 'Playfair Display', serif;
   --font-script: 'Caveat', cursive;
   --font-aksara: 'Noto Sans Sundanese', serif;
 }
@@ -53,31 +74,39 @@ h1, h2, h3, h4, .font-serif {
 
 .aksara-sunda {
   font-family: var(--font-aksara);
-  line-height: 1.2;
+  line-height: 1.25;
 }
 
-/* Custom earthy scrollbar */
+/* Custom Forest Green & Gold scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 9px;
 }
 ::-webkit-scrollbar-track {
   background: var(--color-riksa-cream);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-riksa-gold);
-  border-radius: 5px;
+  background: var(--color-riksa-green);
+  border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-riksa-orange);
+  background: var(--color-riksa-green-dark);
 }
 
-/* Sundanese Repeating Pattern (using 'Ra' character SVG encoded) */
+/* Sundanese Repeating Pattern */
 .pattern-sunda {
-  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='15' y='40' font-family='sans-serif' font-size='24' fill='%23D2691E' opacity='0.05'%3Eᮛ%3C/text%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='15' y='40' font-family='sans-serif' font-size='24' fill='%231E5631' opacity='0.04'%3Eᮛ%3C/text%3E%3C/svg%3E");
   background-repeat: repeat;
 }
 
 .pattern-sunda-dark {
-  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='15' y='40' font-family='sans-serif' font-size='24' fill='%23F5E9D3' opacity='0.03'%3Eᮛ%3C/text%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='15' y='40' font-family='sans-serif' font-size='24' fill='%23C9972E' opacity='0.06'%3Eᮛ%3C/text%3E%3C/svg%3E");
   background-repeat: repeat;
+}
+
+/* Megamendung Cloud Subtle Pattern */
+.pattern-megamendung {
+  background-image: radial-gradient(#1E5631 0.75px, transparent 0.75px), radial-gradient(#C9972E 0.75px, transparent 0.75px);
+  background-size: 30px 30px;
+  background-position: 0 0, 15px 15px;
+  opacity: 0.12;
 }

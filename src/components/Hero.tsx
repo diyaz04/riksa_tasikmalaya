@@ -1,62 +1,183 @@
 import { motion } from 'framer-motion';
+import { Type, ShoppingBag, ArrowRight } from 'lucide-react';
 
-const HERO_IMAGE_URL = 'https://awsimages.detik.net.id/community/media/visual/2024/01/11/pakaian-adat-sunda_169.jpeg?w=1200';
+interface HeroProps {
+  onOpenJoinModal?: () => void;
+  onToggleMobileDrawer?: () => void;
+}
 
-export default function Hero() {
+export default function Hero({ onOpenJoinModal, onToggleMobileDrawer }: HeroProps) {
   return (
-    <section className="relative flex min-h-[86svh] items-center justify-center overflow-hidden bg-riksa-cream px-4 pb-16 pt-28 sm:min-h-[90vh] sm:px-6 sm:pb-20 sm:pt-32">
-      <img
-        src={HERO_IMAGE_URL}
-        alt=""
-        aria-hidden="true"
-        className="absolute inset-0 h-full w-full object-cover object-center [mask-image:linear-gradient(to_bottom,black_0%,black_58%,rgba(0,0,0,0.42)_78%,transparent_100%)]"
-      />
-      <div className="absolute inset-0 bg-riksa-cream/70" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(245,233,211,0.18)_0%,rgba(245,233,211,0.52)_42%,rgba(61,32,19,0.28)_100%)]" />
-      <div className="absolute inset-0 backdrop-blur-[1.5px] [mask-image:linear-gradient(to_bottom,black_0%,rgba(0,0,0,0.62)_48%,transparent_82%)]" />
-      <div className="absolute inset-x-0 bottom-0 h-72 bg-gradient-to-b from-transparent via-riksa-cream/72 to-riksa-cream" />
-
-      {/* Curtain Reveal Animation Layers */}
-      <motion.div 
-        className="absolute inset-0 bg-riksa-brown-dark z-20 origin-top"
-        initial={{ scaleY: 1 }}
-        animate={{ scaleY: 0 }}
-        transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
-      />
+    <section className="relative w-full overflow-hidden bg-[#FAF7EE] flex flex-col items-center select-none">
       
-      {/* Subtle Sundanese Pattern Background */}
-      <div className="absolute inset-0 pattern-sunda opacity-30 mix-blend-multiply"></div>
-
-      <div className="container mx-auto relative z-10 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.8, ease: "easeOut" }}
-          className="flex flex-col items-center"
-        >
-          <h1 className="font-serif text-5xl sm:text-6xl md:text-8xl font-black tracking-wide text-riksa-orange mb-4 drop-shadow-[0_3px_18px_rgba(245,233,211,0.85)]">
-            Riksa
-          </h1>
+      {/* ============================================================== */}
+      {/* 1. DESKTOP VIEW (hidden lg:flex) - 2K ULTRA HD CANVAS          */}
+      {/* ============================================================== */}
+      <div className="hidden lg:flex justify-center w-full">
+        <div className="relative w-full max-w-[1920px] aspect-[1024/572]">
           
-          {/* Subtitle in Aksara Sunda */}
-          <div className="aksara-sunda text-xl sm:text-2xl md:text-3xl text-riksa-gold mb-5 sm:mb-6 opacity-90 drop-shadow-[0_2px_12px_rgba(245,233,211,0.85)]">
-            ᮛᮤᮅᮍᮔ᮪ ᮃᮊ᮪ᮞᮛ ᮞᮥᮔ᮪ᮓ
+          {/* 2K Ultra HD Canvas Artwork */}
+          <img
+            src="/images/hero-desktop-clean-2k.webp"
+            alt="RIKSA - Membumikan Aksara Sunda di Tatar Sukapura"
+            className="w-full h-full object-contain pointer-events-none select-none"
+            draggable={false}
+          />
+
+          {/* ========================================================== */}
+          {/* 2 MAIN FEATURED MENU BUTTONS (UNGGULAN UTAMA WEBSITE)     */}
+          {/* 1. ALIH AKSARA (Transliterasi)                             */}
+          {/* 2. KATALOG PRODUK KEBUDAYAAN (Kriya & Busana Khas Sunda)   */}
+          {/* ========================================================== */}
+          <div 
+            className="absolute z-20 flex items-center gap-3.5 xl:gap-4.5"
+            style={{ left: '8.20%', top: '70.2%', maxWidth: '44%' }}
+          >
+            {/* Menu Unggulan 1: Alih Aksara */}
+            <motion.a
+              href="#converter"
+              whileHover={{ scale: 1.04, y: -2 }}
+              whileTap={{ scale: 0.96 }}
+              aria-label="Menuju Alih Aksara Sunda"
+              title="Alih Aksara Sunda Baku (Transliterasi Latin - Sunda)"
+              className="inline-flex items-center gap-3 px-5 py-3 xl:px-6 xl:py-3.5 rounded-full bg-gradient-to-r from-riksa-green via-emerald-800 to-riksa-green-dark text-white font-bold shadow-[0_10px_26px_rgba(30,86,49,0.36)] hover:shadow-[0_16px_34px_rgba(30,86,49,0.48)] border border-emerald-400/40 transition-all duration-200 group cursor-pointer"
+            >
+              <div className="w-8 h-8 rounded-full bg-white/15 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-inner">
+                <Type size={17} className="text-amber-300 stroke-[2.5]" />
+              </div>
+              <div className="flex flex-col text-left leading-tight">
+                <span className="text-xs xl:text-sm font-extrabold tracking-wide">Alih Aksara</span>
+                <span className="text-[10px] text-emerald-200 font-serif opacity-90 font-normal">ᮃᮜᮤᮂ ᮃᮊ᮪ᮞᮛ ᮞᮥᮔ᮪ᮓ</span>
+              </div>
+              <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center ml-0.5 group-hover:bg-white/20 transition-colors">
+                <ArrowRight size={13} className="text-emerald-100 group-hover:translate-x-0.5 transition-transform" />
+              </div>
+            </motion.a>
+
+            {/* Menu Unggulan 2: Katalog Produk Kebudayaan */}
+            <motion.a
+              href="#products"
+              whileHover={{ scale: 1.04, y: -2 }}
+              whileTap={{ scale: 0.96 }}
+              aria-label="Menuju Katalog Produk Kebudayaan"
+              title="Katalog Produk Budaya Khas Sunda (Kriya, Busana & Pusaka)"
+              className="inline-flex items-center gap-3 px-5 py-3 xl:px-6 xl:py-3.5 rounded-full bg-white/95 backdrop-blur-md text-stone-900 font-bold shadow-[0_10px_26px_rgba(0,0,0,0.08)] hover:shadow-[0_16px_34px_rgba(201,151,46,0.28)] border-2 border-riksa-gold hover:border-riksa-green hover:text-riksa-green transition-all duration-200 group cursor-pointer"
+            >
+              <div className="w-8 h-8 rounded-full bg-amber-500/15 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-inner">
+                <ShoppingBag size={17} className="text-riksa-orange stroke-[2.3]" />
+              </div>
+              <div className="flex flex-col text-left leading-tight">
+                <span className="text-xs xl:text-sm font-extrabold tracking-wide">Katalog Kebudayaan</span>
+                <span className="text-[10px] text-amber-800/80 font-serif opacity-90 font-normal">Karya & Kriya Sunda</span>
+              </div>
+              <div className="w-6 h-6 rounded-full bg-stone-100 group-hover:bg-emerald-50 flex items-center justify-center ml-0.5 transition-colors">
+                <ArrowRight size={13} className="text-stone-500 group-hover:text-riksa-green group-hover:translate-x-0.5 transition-transform" />
+              </div>
+            </motion.a>
           </div>
 
-          <h2 className="font-serif text-xl sm:text-2xl md:text-4xl font-bold text-riksa-brown-dark max-w-3xl leading-snug mb-7 sm:mb-8 drop-shadow-[0_2px_16px_rgba(245,233,211,0.9)]">
-            Membumikan Aksara Sunda di Tatar Sukapura
-          </h2>
+          {/* Mouse Scroll Down Indicator */}
+          <motion.a
+            href="#about"
+            whileHover={{ y: 2 }}
+            aria-label="Gulir ke Tentang Riksa"
+            title="Gulir ke bawah"
+            className="absolute z-20 cursor-pointer rounded-full hover:bg-emerald-900/10 active:scale-95 transition-all"
+            style={{ left: '48.2%', top: '88.0%', width: '3.6%', height: '9.0%' }}
+          />
 
-          <motion.a 
-            href="#program"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="inline-block w-full max-w-xs px-6 py-3.5 bg-riksa-orange text-white font-sans font-bold tracking-wide rounded-full shadow-lg hover:bg-riksa-orange-light transition-colors duration-300 sm:w-auto sm:px-8 sm:py-4"
-          >
-            Gabung Komunitas
-          </motion.a>
-        </motion.div>
+        </div>
       </div>
+
+      {/* ============================================================== */}
+      {/* 2. MOBILE VIEW (flex lg:hidden) - 2K ULTRA HD MOBILE ARTWORK   */}
+      {/* ============================================================== */}
+      <div className="flex lg:hidden justify-center w-full">
+        <div className="relative w-full max-w-[500px] aspect-square">
+          
+          {/* Pristine 2K Mobile Artwork */}
+          <img
+            src="/images/hero-mobile-clean-2k.webp"
+            alt="RIKSA - Membumikan Aksara Sunda di Tatar Sukapura"
+            className="w-full h-full object-cover pointer-events-none select-none"
+            draggable={false}
+          />
+
+          {/* Mobile Hotspots */}
+          {/* Mobile Logo Pill */}
+          <a
+            href="#"
+            aria-label="Beranda RIKSA"
+            className="absolute z-20 cursor-pointer rounded-full active:bg-black/10 transition-all"
+            style={{ left: '3.5%', top: '2.5%', width: '34.0%', height: '12.0%' }}
+          />
+
+          {/* Mobile Hamburger Button [ ☰ ] */}
+          <button
+            type="button"
+            onClick={onToggleMobileDrawer}
+            aria-label="Buka Menu Navigasi"
+            className="absolute z-20 cursor-pointer rounded-full active:bg-black/20 transition-all"
+            style={{ left: '83.0%', top: '2.5%', width: '14.0%', height: '12.0%' }}
+          />
+
+          {/* ========================================================== */}
+          {/* MOBILE 2 MAIN FEATURED MENU BUTTONS                        */}
+          {/* ========================================================== */}
+          <div 
+            className="absolute z-20 grid grid-cols-2 gap-2"
+            style={{ left: '4.2%', top: '69.0%', width: '91.6%' }}
+          >
+            {/* Mobile Menu 1: Alih Aksara */}
+            <motion.a
+              href="#converter"
+              whileTap={{ scale: 0.95 }}
+              aria-label="Alih Aksara Sunda"
+              className="flex items-center justify-between gap-1.5 px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-full bg-gradient-to-r from-riksa-green to-riksa-green-dark text-white font-bold shadow-md border border-emerald-400/30 active:scale-95 transition-all"
+            >
+              <div className="flex items-center gap-1.5 min-w-0">
+                <div className="w-6 h-6 rounded-full bg-white/15 flex items-center justify-center shrink-0">
+                  <Type size={13} className="text-amber-300 stroke-[2.5]" />
+                </div>
+                <div className="flex flex-col text-left leading-tight min-w-0">
+                  <span className="text-[11px] font-extrabold tracking-wide truncate">Alih Aksara</span>
+                  <span className="text-[8px] text-emerald-200 font-serif opacity-90 truncate">ᮃᮜᮤᮂ ᮃᮊ᮪ᮞᮛ</span>
+                </div>
+              </div>
+              <ArrowRight size={12} className="text-emerald-100 shrink-0 opacity-80" />
+            </motion.a>
+
+            {/* Mobile Menu 2: Katalog Produk Kebudayaan */}
+            <motion.a
+              href="#products"
+              whileTap={{ scale: 0.95 }}
+              aria-label="Katalog Produk Kebudayaan"
+              className="flex items-center justify-between gap-1.5 px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-full bg-white/95 backdrop-blur-md text-stone-900 font-bold shadow-md border-2 border-riksa-gold/90 hover:text-riksa-green active:scale-95 transition-all"
+            >
+              <div className="flex items-center gap-1.5 min-w-0">
+                <div className="w-6 h-6 rounded-full bg-amber-500/15 flex items-center justify-center shrink-0">
+                  <ShoppingBag size={13} className="text-riksa-orange stroke-[2.2]" />
+                </div>
+                <div className="flex flex-col text-left leading-tight min-w-0">
+                  <span className="text-[11px] font-extrabold tracking-wide truncate">Katalog Budaya</span>
+                  <span className="text-[8px] text-amber-800/80 font-serif opacity-90 truncate">Kriya Sunda</span>
+                </div>
+              </div>
+              <ArrowRight size={12} className="text-stone-400 shrink-0" />
+            </motion.a>
+          </div>
+
+          {/* Mobile Mouse Scroll Indicator */}
+          <a
+            href="#about"
+            aria-label="Gulir ke Tentang Riksa"
+            className="absolute z-20 cursor-pointer rounded-full active:bg-emerald-900/20 transition-all"
+            style={{ left: '47.50%', top: '88.50%', width: '5.00%', height: '7.50%' }}
+          />
+
+        </div>
+      </div>
+
     </section>
   );
 }
