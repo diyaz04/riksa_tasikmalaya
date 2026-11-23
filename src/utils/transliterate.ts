@@ -5,9 +5,19 @@ export const LATIN_MAP: { [key: string]: string } = {
   "ta": "ᮒ", "da": "ᮓ", "na": "ᮔ",
   "pa": "ᮕ", "ba": "ᮘ", "ma": "ᮙ",
   "ya": "ᮚ", "ra": "ᮛ", "la": "ᮜ", "wa": "ᮝ", "sa": "ᮞ", "ha": "ᮠ",
-  "fa": "ᮖ", "qa": "ᮋ", "va": "ᮗ", "xa": "ᮟ", "za": "ᮐ",
+  "fa": "ᮖ", "qa": "ᮋ", "va": "ᮗ", "xa": "ᮟ", "za": "ᮐ", "kha": "ᮮ", "sya": "ᮯ",
   // Aksara Swara
   "a": "ᮃ", "i": "ᮄ", "u": "ᮅ", "é": "ᮆ", "o": "ᮇ", "e": "ᮈ", "eu": "ᮉ"
+};
+
+export const SUNDA_DIGITS: { [k: string]: string } = {
+  "0": "᮰", "1": "᮱", "2": "᮲", "3": "᮳", "4": "᮴",
+  "5": "᮵", "6": "᮶", "7": "᮷", "8": "᮸", "9": "᮹"
+};
+
+export const LATIN_DIGITS: { [k: string]: string } = {
+  "᮰": "0", "᮱": "1", "᮲": "2", "᮳": "3", "᮴": "4",
+  "᮵": "5", "᮶": "6", "᮷": "7", "᮸": "8", "᮹": "9"
 };
 
 const RARANGKEN_VOWEL: { [v: string]: string } = {
@@ -36,14 +46,49 @@ export function translateLatinToSunda(text: string): { aksara: string; latinRepr
 
   let result = "";
   let latinRepr: string[] = [];
-  const clean = text.toLowerCase().trim().replace(/è/g, "é").replace(/[^a-zé ]/g, "");
+
+  // Normalisasi karakter Sunda Wilangan jika ada yang dimasukkan langsung
+  let normalized = text;
+  for (const [sundaDigit, latinDigit] of Object.entries(LATIN_DIGITS)) {
+    normalized = normalized.split(sundaDigit).join(latinDigit);
+  }
+
+  const clean = normalized.toLowerCase().trim().replace(/è/g, "é").replace(/[^a-zé0-9| ]/g, "");
   const words = clean.split(" ");
 
   for (const word of words) {
     if (!word) continue;
+
+    // ══ Jika kata adalah bilangan/angka murni (misal: "2024" atau "|2024|") ══
+    if (/^\|?\d+\|?$/.test(word)) {
+      const digitsOnly = word.replace(/\|/g, "");
+      const sundaDigits = digitsOnly.split("").map(d => SUNDA_DIGITS[d] || d).join("");
+      result += `|${sundaDigits}| `;
+      latinRepr.push(`|${digitsOnly}|`);
+      latinRepr.push(" ");
+      continue;
+    }
+
     let index = 0;
 
     while (index < word.length) {
+      // ══ Deteksi Angka (Wilangan) di dalam susunan kata ══
+      if (word[index] === "|" || (word[index] >= "0" && word[index] <= "9")) {
+        let numStr = "";
+        if (word[index] === "|") index++;
+        while (index < word.length && word[index] >= "0" && word[index] <= "9") {
+          numStr += word[index];
+          index++;
+        }
+        if (index < word.length && word[index] === "|") index++;
+        if (numStr.length > 0) {
+          const sundaDigits = numStr.split("").map(d => SUNDA_DIGITS[d] || d).join("");
+          result += `|${sundaDigits}|`;
+          latinRepr.push(`|${numStr}|`);
+          continue;
+        }
+      }
+
       if (word[index] === "n" && isNgCoda(word, index)) {
         result += "ᮀ"; // Panyecek
         latinRepr.push("ng[panyecek]");
@@ -186,7 +231,7 @@ const CONSONANT_BASE: { [k: string]: string } = {
   "ᮊ": "k",  "ᮋ": "q",  "ᮌ": "g",  "ᮍ": "ng", "ᮎ": "c",  "ᮏ": "j",
   "ᮐ": "z",  "ᮑ": "ny", "ᮒ": "t",  "ᮓ": "d",  "ᮔ": "n",  "ᮕ": "p",
   "ᮖ": "f",  "ᮗ": "v",  "ᮘ": "b",  "ᮙ": "m",  "ᮚ": "y",  "ᮛ": "r",
-  "ᮜ": "l",  "ᮝ": "w",  "ᮞ": "s",  "ᮟ": "x",  "ᮠ": "h",
+  "ᮜ": "l",  "ᮝ": "w",  "ᮞ": "s",  "ᮟ": "x",  "ᮠ": "h",  "ᮮ": "kh", "ᮯ": "sy"
 };
 
 const SWARA: { [k: string]: string } = {
@@ -223,6 +268,32 @@ export function translateSundaToLatin(text: string): string {
     if (c === " " || ".,;:!?-\"'()[]".includes(c)) {
       result += c; i++; continue;
     }
+
+    // ══ Wilangan (Angka Sunda ᮰ - ᮹ & Angka Latin 0 - 9) ══
+    if (LATIN_DIGITS[c]) {
+      result += LATIN_DIGITS[c];
+      i++;
+      continue;
+    }
+    if (c >= "0" && c <= "9") {
+      result += c;
+      i++;
+      continue;
+    }
+
+    // ══ Pembatas Wilangan (Piping |) ══
+    if (c === "|") {
+      const prevIsDigit = i > 0 && (!!LATIN_DIGITS[text[i - 1]] || (text[i - 1] >= '0' && text[i - 1] <= '9'));
+      const nextIsDigit = i + 1 < text.length && (!!LATIN_DIGITS[text[i + 1]] || (text[i + 1] >= '0' && text[i + 1] <= '9'));
+      if (prevIsDigit || nextIsDigit) {
+        i++;
+        continue;
+      }
+      result += "|";
+      i++;
+      continue;
+    }
+
     if (SWARA[c]) {
       result += SWARA[c]; i++; continue;
     }
@@ -252,5 +323,15 @@ export function translateSundaToLatin(text: string): string {
     if (c === "᮪") { i++; continue; }
     i++;
   }
-  return result.trim();
+  // Normalisasi ejaan fonetik khas (seperti sampurasun, riksa sukapura, silih asih asah asuh)
+  return result
+    .replace(/sampura+sun/gi, "sampurasun")
+    .replace(/riksasukapura/gi, "riksa sukapura")
+    .replace(/wilujengsumping/gi, "wilujeng sumping")
+    .replace(/silihasihsilihasahsilihasuh/gi, "silih asih silih asah silih asuh")
+    .replace(/silihasahsilihasihsilihasuh/gi, "silih asah silih asih silih asuh")
+    .replace(/silihasihasahasuh/gi, "silih asih asah asuh")
+    .replace(/kujangpasundan/gi, "kujang pasundan")
+    .replace(/aa+/g, "a")
+    .trim();
 }
