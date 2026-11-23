@@ -5,7 +5,12 @@ import {
   Zap, X, SwitchCamera, Info, Edit3, Clock, FlaskConical
 } from 'lucide-react';
 import FadeIn from './Shared/FadeIn';
-import { translateLatinToSunda, translateSundaToLatin } from '../utils/transliterate';
+import { 
+  translateLatinToSunda, 
+  translateSundaToLatin, 
+  explainSundaToLatin, 
+  WordExplanation 
+} from '../utils/transliterate';
 import { 
   scanAksaraSundaFromImage, 
   OcrScanResult, 
@@ -67,6 +72,7 @@ export default function Converter() {
   const [input, setInput] = useState('');
   const [copied, setCopied] = useState(false);
   const [showDictionary, setShowDictionary] = useState(false);
+  const [showExplanation, setShowExplanation] = useState(true);
 
   // OCR Mode State
   const [ocrImage, setOcrImage] = useState<string | null>(null);
@@ -98,9 +104,15 @@ export default function Converter() {
     setInput('');
   };
 
+  const transliteration = mode === 'latin-to-sunda' 
+    ? translateLatinToSunda(input)
+    : { aksara: input, latinRepr: '', explanations: explainSundaToLatin(input) };
+
   const output = mode === 'latin-to-sunda' 
-    ? translateLatinToSunda(input).aksara 
+    ? transliteration.aksara 
     : translateSundaToLatin(input);
+
+  const explanations = transliteration.explanations;
 
   const handleCopy = () => {
     if (!output) return;
@@ -1053,6 +1065,84 @@ export default function Converter() {
                 </div>
 
               </div>
+
+              {/* ======================================================== */}
+              {/* BEDAH RUMUS KAIDAH AKSARA SUNDA (KATA PER KATA)          */}
+              {/* ======================================================== */}
+              {output && explanations && explanations.length > 0 && (
+                <div className="mb-6 rounded-3xl bg-gradient-to-br from-amber-50/90 via-stone-50 to-emerald-50/50 border-2 border-amber-300/80 shadow-md overflow-hidden">
+                  {/* Header Bar */}
+                  <div className="p-4 sm:p-5 border-b border-amber-200/80 flex items-center justify-between gap-3 bg-amber-100/40">
+                    <div className="flex items-center gap-3">
+                      <div className="w-9 h-9 rounded-2xl bg-gradient-to-br from-amber-500 to-riksa-orange text-white flex items-center justify-center font-bold shadow-xs">
+                        <Sparkles size={18} />
+                      </div>
+                      <div>
+                        <h4 className="font-serif font-bold text-sm sm:text-base text-stone-900 leading-snug">
+                          Penjelasan Rumus Penulisan Aksara Sunda (Kata per Kata)
+                        </h4>
+                        <p className="text-stone-500 text-[11px] sm:text-xs">
+                          Bedah kaidah pembentukan karakter (Ngalagena, Swara, Rarangkén, dan Wilangan)
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <span className="text-[10px] font-extrabold uppercase tracking-wider bg-riksa-orange/15 text-riksa-orange border border-riksa-orange/30 px-2.5 py-0.5 rounded-full hidden sm:inline">
+                        Kaidah Baku Kaganga
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => setShowExplanation(v => !v)}
+                        className="text-stone-500 hover:text-stone-800 p-1.5 rounded-xl hover:bg-white/60 transition-colors cursor-pointer"
+                        title={showExplanation ? 'Sembunyikan Penjelasan' : 'Tampilkan Penjelasan'}
+                      >
+                        {showExplanation ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Body Content */}
+                  {showExplanation && (
+                    <div className="p-4 sm:p-5 space-y-3.5">
+                      {explanations.map((item, idx) => (
+                        <div 
+                          key={idx} 
+                          className="p-3.5 sm:p-4 rounded-2xl bg-white/95 border border-amber-200/70 shadow-2xs hover:border-riksa-green/40 transition-all"
+                        >
+                          {/* Word Header */}
+                          <div className="flex items-center gap-2.5 mb-3 pb-2 border-b border-stone-100">
+                            <span className="text-[11px] font-bold uppercase tracking-wider text-stone-400">Kata:</span>
+                            <span className="font-bold text-stone-800 text-sm font-sans bg-stone-100 px-2.5 py-0.5 rounded-lg">
+                              "{item.word}"
+                            </span>
+                            <span className="text-stone-300">➔</span>
+                            <span className="aksara-sunda font-bold text-xl text-riksa-green bg-emerald-50 px-2.5 py-0.5 rounded-lg border border-emerald-200">
+                              {item.aksaraWord}
+                            </span>
+                          </div>
+
+                          {/* Syllable Steps / Rumus List */}
+                          <div className="space-y-2">
+                            {item.syllables.map((syl, sIdx) => (
+                              <div key={sIdx} className="flex items-start gap-2.5 text-xs sm:text-sm">
+                                <div className="shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-50/90 border border-emerald-200/90 text-riksa-green font-bold">
+                                  <span className="font-sans text-xs text-stone-700">{syl.part}</span>
+                                  <span className="text-stone-300 font-normal">|</span>
+                                  <span className="aksara-sunda text-base text-riksa-green">{syl.aksaraPart}</span>
+                                </div>
+                                <div className="pt-0.5 text-stone-700 font-medium leading-relaxed">
+                                  {syl.formula}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
 
               {/* Quick Virtual Keyboard Accordion */}
               <div className="border-t border-stone-200 pt-5">
